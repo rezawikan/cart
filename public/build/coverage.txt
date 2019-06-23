@@ -1,0 +1,90 @@
+
+
+Code Coverage Report:      
+  2019-06-22 14:12:00      
+                           
+ Summary:                  
+  Classes: 20.49% (25/122) 
+  Methods: 24.04% (88/366) 
+  Lines:   21.91% (213/972)
+
+\App\Console::App\Console\Kernel
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  4/  4)
+\App\Exceptions::App\Exceptions\Handler
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  3/  3)
+\App\Http\Controllers\Auth::App\Http\Controllers\Auth\LoginController
+  Methods:  25.00% ( 1/ 4)   Lines:  28.00% (  7/ 25)
+\App\Http\Controllers\Auth::App\Http\Controllers\Auth\MeController
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  3/  3)
+\App\Http\Controllers\Auth::App\Http\Controllers\Auth\RegisterController
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+\App\Http\Controllers\Cart::App\Http\Controllers\Cart\CartController
+  Methods:  66.67% ( 4/ 6)   Lines:  47.06% (  8/ 17)
+\App\Http\Controllers\Categories::App\Http\Controllers\Categories\CategoryController
+  Methods:  14.29% ( 1/ 7)   Lines:  25.00% (  2/  8)
+\App\Http\Controllers\Products::App\Http\Controllers\Products\ProductController
+  Methods:  37.50% ( 3/ 8)   Lines:  41.18% (  7/ 17)
+\App\Http\Middleware::App\Http\Middleware\ProfileJsonResponse
+  Methods:   0.00% ( 0/ 1)   Lines:  60.00% (  3/  5)
+\App\Http\Requests\Auth::App\Http\Requests\Auth\LoginRequest
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
+\App\Http\Requests\Auth::App\Http\Requests\Auth\RegisterRequest
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
+\App\Http\Requests\Cart::App\Http\Requests\Cart\CartStoreRequest
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
+\App\Http\Requests\Cart::App\Http\Requests\Cart\CartUpdateRequest
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
+\App\Http\Resources::App\Http\Resources\CategoryResource
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
+\App\Http\Resources::App\Http\Resources\PrivateUserResource
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  4/  4)
+\App\Http\Resources::App\Http\Resources\ProductEditResource
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
+\App\Http\Resources::App\Http\Resources\ProductIndexResource
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% ( 11/ 11)
+\App\Models::App\Models\Address
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% (  4/  4)
+\App\Models::App\Models\Category
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% (  3/  3)
+\App\Models::App\Models\Order
+  Methods:  28.57% ( 2/ 7)   Lines:  58.33% (  7/ 12)
+\App\Models::App\Models\Product
+  Methods:  87.50% ( 7/ 8)   Lines:  92.31% ( 12/ 13)
+\App\Models::App\Models\ProductVariation
+  Methods:  70.59% (12/17)   Lines:  57.14% ( 20/ 35)
+\App\Models::App\Models\Province
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
+\App\Models::App\Models\Subdistrict
+  Methods:  50.00% ( 1/ 2)   Lines:  50.00% (  1/  2)
+\App\Models::App\Models\User
+  Methods:  71.43% ( 5/ 7)   Lines:  83.33% ( 10/ 12)
+\App\Models\Collection::App\Models\Collection\ProductVariationCollection
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+\App\Models\Traits::CanBeDefault
+  Methods:   0.00% ( 0/ 1)   Lines:  66.67% (  4/  6)
+\App\Models\Traits::CanBeScoped
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
+\App\Models\Traits::HasChildren
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+\App\Models\Traits::HasPrice
+  Methods:  50.00% ( 1/ 2)   Lines:  50.00% (  1/  2)
+\App\Models\Traits::IsOrderable
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+\App\Models\Traits::LatestOrder
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
+\App\Pattern\Cart::App\Pattern\Cart\Cart
+  Methods:  47.06% ( 8/17)   Lines:  48.00% ( 24/ 50)
+\App\Providers::App\Providers\AppServiceProvider
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  8/  8)
+\App\Providers::App\Providers\AuthServiceProvider
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+\App\Providers::App\Providers\EventServiceProvider
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+\App\Providers::App\Providers\RouteServiceProvider
+  Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 16/ 16)
+\App\Scoping::App\Scoping\Scoper
+  Methods:  66.67% ( 2/ 3)   Lines:  90.00% (  9/ 10)
+\App\Scoping\Scopes\Products::App\Scoping\Scopes\Products\CategoryScope
+  Methods:   0.00% ( 0/ 1)   Lines:  77.78% (  7/  9)
+\App\Scoping\Scopes\Products::App\Scoping\Scopes\Products\PopularScope
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  5/  5)
