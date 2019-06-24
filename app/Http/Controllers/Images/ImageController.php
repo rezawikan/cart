@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Images;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ImageResource;
 use App\Models\Product;
 use App\Models\Image;
 
 class ImageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:api'])->only('store');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,13 +45,15 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $product = Product::find($request->productid);
-        $file = Storage::disk('spaces')->put((string)$request->folder,$request->file, 'public');
-        return $product->images()->create([
+        $file    = Storage::disk('spaces')->put((string)$request->folder,$request->file, 'public');
+        return $image   = $product->images()->create([
             'name' => basename($file),
             'location' => $file,
             'size' => (int)$request->file->getClientSize(),
             'format' => $request->file->getClientMimeType()
         ]);
+
+        return new ImageResource($image);
 
     }
 
@@ -91,6 +99,8 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-
+        $image = Image::where('name','like','%'.$id.'%')->first();
+        Storage::disk('spaces')->delete($image->location);
+        $image->delete();
     }
 }

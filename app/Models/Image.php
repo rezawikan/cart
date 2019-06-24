@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
 
 class Image extends Model
 {
@@ -21,8 +22,8 @@ class Image extends Model
      * @param type
      * @return void
      */
-    public function images()
+    public function products()
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(Product::class);
     }
 }

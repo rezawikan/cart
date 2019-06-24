@@ -16,7 +16,7 @@ use App\Models\ProductVariation;
 Route::get('/','Stock\LiveStockController');
 Route::resource('users', 'User\UserController');
 Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
-
+Route::resource('products', 'Products\ProductController');
 Route::resource('cart','Cart\PublicCartController');
 Route::resource('variations','Products\ProductVariationController');
 Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');

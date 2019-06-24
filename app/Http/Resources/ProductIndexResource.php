@@ -20,7 +20,7 @@ class ProductIndexResource extends JsonResource
           'slug'        => $this->slug,
           'description' => $this->description,
           'weight'      => $this->weight,
-          'images'       => $this->images,
+          'images'      => $this->images,
           'price'       => $this->price,
           'base_price'  => $this->base_price,
           'stock_count' => $this->stockCount(),
