@@ -109,13 +109,18 @@ class HandleProduct
 
           foreach ($variant->stocks as $value) {
              if ($value->quantity >= $temp) {
-                 Stock::where('id', $value->id)->update([
+                 $stock = Stock::where('id', $value->id)->update([
                    'quantity' => $value->quantity - $temp
                  ]);
+
+                 if ($stock['quantity'] == 0) {
+                      Stock::destroy($stock['id']);
+                 }
+                 
                  break;
              } else {
-                $temp = $quantity - $value->quantity;
-                Stock::delete($value->id);
+                $temp = $temp - $value->quantity;
+                Stock::destroy($value->id);
              }
          }
       } else {

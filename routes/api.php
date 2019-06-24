@@ -33,7 +33,6 @@ Route::resource('public-orders', 'Orders\PublicOrderController');
 Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');
 Route::resource('images', 'Images\ImageController');
 Route::resource('users', 'User\UserController');
-Route::get('users-invoke', 'User\UserInvokeController');
 Route::get('livestock', 'Stock\LiveStockController');
 
 Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
