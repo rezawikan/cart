@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\paymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\ProductVariation;
-use App\Models\paymentMethod;
+use App\Models\Traits\CanBeScoped;
+use App\Models\Traits\CompletedOrder;
+use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use CanBeScoped, CompletedOrder;
+
     const PENDING = 'pending';
     const PROCESSING = 'processing';
     const PAYMENT_FAILED = 'payment_failed';
@@ -67,5 +71,10 @@ class Order extends Model
         return $this->belongsToMany(ProductVariation::class, 'product_variation_order')
                 ->withPivot(['quantity'])
                 ->withTimestamps();
+    }
+
+    public function revenue()
+    {
+        return $this->base_subtotal - $this->discount;
     }
 }

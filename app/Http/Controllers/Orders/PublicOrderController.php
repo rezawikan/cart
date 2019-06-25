@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Orders;
 
-use App\Pattern\Cart\Cart;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Order\OrderStoreRequest;
-use App\Http\Requests\Addresses\AddressStoreRequest;
-use App\Events\Orders\OrderCreated;
-use App\Http\Resources\OrderResource;
-use App\Payment\PaymentHandler;
 use App\Models\User;
 use App\Models\Order;
+use App\Pattern\Cart\Cart;
+use Illuminate\Http\Request;
+use App\Payment\PaymentHandler;
+use App\Events\Orders\OrderCreated;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
+use App\Http\Requests\Order\OrderStoreRequest;
+use App\Http\Requests\Addresses\AddressStoreRequest;
 
 class PublicOrderController extends Controller
 {
@@ -20,9 +20,10 @@ class PublicOrderController extends Controller
 
     public function __construct()
     {
-        // $this->middleware(['auth:api']);
+        $this->middleware(['auth:api']);
         $this->middleware(['cart.isenotempty','cart.sync'])->only('store');
     }
+    
     /**
      * Display a listing of the resource.
      *

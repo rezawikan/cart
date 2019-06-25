@@ -33,6 +33,7 @@ class OrderResource extends JsonResource
           'shippingMethod' => new ShippingMethodResource(
             $this->whenLoaded('shippingMethod')
           ),
+          'revenue' => $this->revenue()
         ];
     }
 }

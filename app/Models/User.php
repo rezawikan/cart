@@ -5,6 +5,7 @@ namespace App\Models;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Traits\LatestOrder;
 use App\Models\ProductVariation;
 use App\Models\PaymentMethod;
 use App\Models\Address;
@@ -13,7 +14,7 @@ use App\Models\Traits\CanBeScoped;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, CanBeScoped;
+    use Notifiable, CanBeScoped, LatestOrder;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +22,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','gateway_customer_id'
+        'name', 'email', 'password','gateway_customer_id','image'
     ];
 
     /**

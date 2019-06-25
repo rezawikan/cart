@@ -33,12 +33,15 @@ Route::resource('public-orders', 'Orders\PublicOrderController');
 Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');
 Route::resource('images', 'Images\ImageController');
 Route::resource('users', 'User\UserController');
-Route::get('livestock', 'Stock\LiveStockController');
-
-Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
-
-
 Route::resource('post', 'Posts\PostController');
+
+Route::get('revenue', 'Analytics\AnalyticsController@revenue');
+Route::get('livestock', 'Stock\LiveStockController');
+Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
+Route::get('shipping', 'Shipping\ShippingController@index');
+
+
+
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('register', 'Auth\RegisterController@action');
@@ -59,6 +62,3 @@ Route::resource('public-cart','Cart\PublicCartController', [
     'public-cart' => 'ProductVariation'
   ]
 ]);
-
-
-Route::get('shipping', 'Shipping\ShippingController@index');

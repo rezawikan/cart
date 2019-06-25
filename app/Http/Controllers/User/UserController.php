@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Scoping\Scopes\Products\NameScope;
 use App\Http\Resources\UserResource;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Resources\PrivateUserResource;
 
 class UserController extends Controller
 {
@@ -30,7 +32,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::withScopes($this->scopes())->paginate(12)->appends($request->except('page'));
+        $users = User::LatestOrder()->withScopes($this->scopes())->paginate(12)->appends($request->except('page'));
 
         return UserResource::collection($users);
     }
@@ -51,9 +53,11 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        //
+        $user = User::create($request->only(['name','email','password','image']));
+
+        return new PrivateUserResource($user);
     }
 
     /**

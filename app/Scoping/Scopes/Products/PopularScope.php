@@ -4,8 +4,6 @@ namespace App\Scoping\Scopes\Products;
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Scoping\Contracts\Scope;
-use App\Models\Category;
-use App\Models\ProductVariation;
 use Illuminate\Support\Facades\DB;
 
 /**
