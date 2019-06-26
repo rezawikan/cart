@@ -7,9 +7,11 @@ use App\Models\User;
 use App\Models\PaymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\Order;
+use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 $factory->define(Order::class, function (Faker $faker) {
+
     return [
       'user_id' => $user = factory(User::class)->create()->id,
       'status' => 'completed',
@@ -19,6 +21,7 @@ $factory->define(Order::class, function (Faker $faker) {
       'discount' => 300,
       'subtotal' => 500,
       'base_subtotal' => 400,
-      'total' => 5000
+      'total' => 5000,
+      'created_at' => Carbon::now()->subDays(rand(1,7))->format('Y-m-d H:i:s')
     ];
 });

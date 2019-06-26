@@ -35,7 +35,7 @@ Route::resource('images', 'Images\ImageController');
 Route::resource('users', 'User\UserController');
 Route::resource('post', 'Posts\PostController');
 
-Route::get('revenue', 'Analytics\AnalyticsController@revenue');
+Route::get('analytics', 'Analytics\AnalyticsController@analytics');
 Route::get('livestock', 'Stock\LiveStockController');
 Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
 Route::get('shipping', 'Shipping\ShippingController@index');

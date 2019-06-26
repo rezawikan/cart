@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Analytics;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
-use App\Scoping\Scopes\Analytics\LastMonthScope;
+use App\Http\Resources\AnalyticsOrderResource;
+use App\Scoping\Scopes\Analytics\FilterPriodScope;
+use App\Scoping\Scopes\Analytics\FilterStatusScope;
 
 class AnalyticsController extends Controller
 {
@@ -23,9 +24,8 @@ class AnalyticsController extends Controller
     protected function scopes()
     {
         return [
-          // 'last_week'  => new CategoryScope(),
-          'last_month' => new LastMonthScope(),
-          // 'last_year' => new PopularScope()
+          'period'  => new FilterPriodScope(),
+          'status'   => new FilterStatusScope()
         ];
     }
 
@@ -34,10 +34,10 @@ class AnalyticsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function revenue(Request $request)
+    public function analytics(Request $request)
     {
-         $orders = Order::CompletedOrder()->withScopes($this->scopes())->get();
+        $orders = Order::withScopes($this->scopes())->get();
 
-        return OrderResource::collection($orders);
+        return AnalyticsOrderResource::collection($orders);
     }
 }

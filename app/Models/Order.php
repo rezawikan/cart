@@ -8,12 +8,11 @@ use App\Models\paymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\ProductVariation;
 use App\Models\Traits\CanBeScoped;
-use App\Models\Traits\CompletedOrder;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use CanBeScoped, CompletedOrder;
+    use CanBeScoped;
 
     const PENDING = 'pending';
     const PROCESSING = 'processing';
@@ -36,9 +35,9 @@ class Order extends Model
     {
         parent::boot();
 
-        static::creating(function ($order) {
-            $order->status = self::PENDING;
-        });
+        // static::created(function ($order) {
+        //     $order->status = self::PENDING;
+        // });
     }
 
     public function total()

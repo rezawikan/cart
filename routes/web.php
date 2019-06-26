@@ -12,6 +12,7 @@
 */
 
 use App\Models\ProductVariation;
+use Carbon\Carbon;
 
 Route::get('/','Stock\LiveStockController');
 Route::resource('users', 'User\UserController');
@@ -20,10 +21,13 @@ Route::resource('products', 'Products\ProductController');
 Route::resource('cart','Cart\PublicCartController');
 Route::resource('variations','Products\ProductVariationController');
 Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');
-
+// Carbon::now()->endOfWeek()
 Route::get('/tes', function(){
-  $variant = ProductVariation::find(1);
-  return $variant->stocks->first();
+  // return Carbon::now()->subYear()->year;
+  return   Carbon::now()->subDays(2);
+  // return is_numeric($a);
+  // $variant = ProductVariation::find(1);
+  // return $variant->stocks->first();
 });
 
 Route::resource('products', 'Products\ProductController');
