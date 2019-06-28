@@ -12,8 +12,8 @@ trait LatestOrder
        * @param \Illuminate\Database\Eloquent\Builder $query
        * @return \Illuminate\Database\Eloquent\Builder
        */
-    public function scopeLatestOrder(Builder $builder)
+    public function scopeLatestOrder(Builder $builder, $value = 'desc')
     {
-        return $builder->orderBy('created_at','desc');
+        return $builder->orderBy('created_at', $value);
     }
 }

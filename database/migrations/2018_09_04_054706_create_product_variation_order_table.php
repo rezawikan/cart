@@ -18,6 +18,7 @@ class CreateProductVariationOrderTable extends Migration
             $table->integer('order_id')->unsigned()->index();
             $table->integer('product_variation_id')->unsigned()->index();
             $table->integer('quantity');
+            $table->string('status')->default('accepted');
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders');

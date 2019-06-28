@@ -7,12 +7,14 @@ use App\Models\Address;
 use App\Models\paymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\ProductVariation;
+use App\Models\Traits\Timeable;
 use App\Models\Traits\CanBeScoped;
+use App\Models\Traits\LatestOrder;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use CanBeScoped;
+    use CanBeScoped, Timeable, LatestOrder;
 
     const PENDING = 'pending';
     const PROCESSING = 'processing';
@@ -68,7 +70,7 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(ProductVariation::class, 'product_variation_order')
-                ->withPivot(['quantity'])
+                ->withPivot(['quantity','status'])
                 ->withTimestamps();
     }
 

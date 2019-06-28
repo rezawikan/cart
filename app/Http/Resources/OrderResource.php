@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\AddressResource;
 use App\Http\Resources\ShippingMethodResource;
-use App\Http\Resources\ProductVariationResource;
+use App\Http\Resources\ProductVariationOrderResource;
 
 class OrderResource extends JsonResource
 {
@@ -24,7 +24,7 @@ class OrderResource extends JsonResource
           'subtotal' => $this->subtotal,
           'base_subtotal' => $this->base_subtotal,
           'total' => $this->total(),
-          'products' => ProductVariationResource::collection(
+          'products' => ProductVariationOrderResource::collection(
             $this->whenLoaded('products')
           ),
           'address' => new AddressResource(
@@ -33,7 +33,10 @@ class OrderResource extends JsonResource
           'shippingMethod' => new ShippingMethodResource(
             $this->whenLoaded('shippingMethod')
           ),
-          'revenue' => $this->revenue()
+          'revenue' => $this->revenue(),
+          'quantity' => $this->products->sum(function($product){
+              return $product->pivot->quantity;
+          })
         ];
     }
 }

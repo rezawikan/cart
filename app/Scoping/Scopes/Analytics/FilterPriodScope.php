@@ -16,40 +16,47 @@ class FilterPriodScope implements Scope
 
       if (is_numeric($value)) {
           return $builder->whereBetween('created_at', [
-            Carbon::now()->subDays($value),
-            Carbon::now()
+            Carbon::today()->subDays($value),
+            Carbon::today()
           ]);
       }
 
       switch ($value) {
         case 'this_week':
           return $builder->whereBetween('created_at', [
-            Carbon::now()->startOfWeek(),
-            Carbon::now()->endOfWeek()
+            Carbon::today()->startOfWeek(),
+            Carbon::today()->endOfWeek()
           ]);
           break;
 
         case 'this_month':
-          return $builder->whereMonth('created_at', Carbon::now()->month);
+          return $builder->whereMonth('created_at', Carbon::today()->month);
           break;
 
         case 'this_year':
-          return $builder->whereYear('created_at',Carbon::now()->year);
+          return $builder->whereYear('created_at',Carbon::today()->year);
           break;
 
         case 'last_week':
           return $builder->whereBetween('created_at', [
-            Carbon::now()->subWeek()->startOfWeek(),
-            Carbon::now()->subWeek()->endOfWeek()
+            Carbon::today()->subWeek()->startOfWeek(),
+            Carbon::today()->subWeek()->endOfWeek()
           ]);
           break;
 
         case 'last_month':
-          return $builder->whereMonth('created_at', Carbon::now()->subMonth()->month);
+          return $builder->whereMonth('created_at', Carbon::today()->subMonth()->month);
           break;
 
         case 'last_year':
-          return $builder->whereYear('created_at',Carbon::now()->subYear()->year);
+          return $builder->whereYear('created_at',Carbon::today()->subYear()->year);
+          break;
+
+        case 'back_year':
+          return $builder->whereBetween('created_at', [
+            Carbon::today()->month,
+            Carbon::today()->subMonths(12)
+          ]);
           break;
 
         default:

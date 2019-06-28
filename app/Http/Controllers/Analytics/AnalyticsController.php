@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Analytics;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AnalyticsOrderResource;
+use App\Http\Resources\Timeable\CountAnalyticsResource;
+use App\Http\Resources\Timeable\RevenueAnalyticsResource;
 use App\Scoping\Scopes\Analytics\FilterPriodScope;
 use App\Scoping\Scopes\Analytics\FilterStatusScope;
 
@@ -34,10 +35,34 @@ class AnalyticsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function analytics(Request $request)
+    public function countAnalytics(Request $request, $period)
     {
-        $orders = Order::withScopes($this->scopes())->get();
+        $orders  = Order::LatestOrder('ASC')->withScopes($this->scopes())->get()->groupBy($period);
+        $numbers = $orders->mapToGroups(function ($items, $key) {
+          return [
+            'numbers' => count($items)
+          ];
+        });
 
-        return AnalyticsOrderResource::collection($orders);
+        return new CountAnalyticsResource($numbers->merge(['status' => $orders->keys()]));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sumRevenueAnalytics(Request $request, $period)
+    {
+        $orders  = Order::LatestOrder('ASC')->withScopes($this->scopes())->get()->groupBy($period);
+        $numbers = $orders->mapToGroups(function ($items, $key) {
+          return [
+            'revenue' => $items->sum(function($item){
+              return $item->revenue();
+            })
+          ];
+        });
+
+        return new RevenueAnalyticsResource($numbers->merge(['status' => $orders->keys()]));
     }
 }

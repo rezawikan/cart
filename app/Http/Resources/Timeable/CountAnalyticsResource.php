@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Timeable;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ShippingResource extends JsonResource
+class CountAnalyticsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,7 +14,9 @@ class ShippingResource extends JsonResource
      */
     public function toArray($request)
     {
-        dd($request);
-        // return $this->resource['results'];
+        return [
+          'numbers' => $this->resource['numbers'],
+          'status'  => $this->resource['status']
+        ];
     }
 }

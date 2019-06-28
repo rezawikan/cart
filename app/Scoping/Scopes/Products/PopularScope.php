@@ -13,7 +13,7 @@ class PopularScope implements Scope
 {
     public function apply(Builder $builder, $value)
     {
-        $popular = DB::select("SELECT product_variation_id, SUM(product_variation_order.quantity) AS quantity FROM product_variation_order GROUP BY product_variation_id ORDER BY quantity {$value} LIMIT 9");
+        $popular = DB::select("SELECT product_variation_id, SUM(CASE WHEN product_variation_order.status > @'accepted' THEN product_variation_order.quantity ELSE 0 END ) AS quantity FROM product_variation_order GROUP BY product_variation_id ORDER BY quantity {$value} LIMIT 9");
 
         $filter = array_map(function($data){
           return $data->product_variation_id;

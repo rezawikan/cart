@@ -10,6 +10,7 @@ use App\Payment\PaymentHandler;
 use App\Events\Orders\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Scoping\Scopes\Orders\IDScope;
 use App\Http\Requests\Order\OrderStoreRequest;
 use App\Http\Requests\Addresses\AddressStoreRequest;
 
@@ -20,10 +21,22 @@ class PublicOrderController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:api']);
+        // $this->middleware(['auth:api']);
         $this->middleware(['cart.isenotempty','cart.sync'])->only('store');
     }
-    
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function scopes()
+    {
+        return [
+          'id'    => new IDScope(),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +44,9 @@ class PublicOrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::with([
+        $orders = Order::LatestOrder()
+        ->withScopes($this->scopes())
+        ->with([
           'products',
           'products.stock',
           'products.type',
@@ -42,7 +57,7 @@ class PublicOrderController extends Controller
           'shippingMethod'
         ])
         ->latest()
-        ->paginate(2);
+        ->paginate(12);
 
         return OrderResource::collection($orders);
     }

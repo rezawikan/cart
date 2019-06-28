@@ -7,7 +7,7 @@ use App\Http\Resources\ProductIndexResource;
 use App\Http\Resources\ProductVariationResource;
 use Illuminate\Support\Collection;
 
-class ProductVariationResource extends JsonResource
+class ProductVariationOrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -30,7 +30,9 @@ class ProductVariationResource extends JsonResource
           'stock_count' => (int) $this->stockCount(),
           'type'  => $this->type,
           'product' =>  new ProductIndexResource($this->product),
-          'weight'  => $this->weight
+          'weight'  => $this->weight,
+          'quantity' => $this->pivot->quantity,
+          'status'  => $this->pivot->status
         ];
     }
 }

@@ -24,7 +24,8 @@ Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');
 // Carbon::now()->endOfWeek()
 Route::get('/tes', function(){
   // return Carbon::now()->subYear()->year;
-  return   Carbon::now()->subDays(2);
+  // return   Carbon::now()->subDays(2);
+  return Carbon::today()->subMonths(12);
   // return is_numeric($a);
   // $variant = ProductVariation::find(1);
   // return $variant->stocks->first();

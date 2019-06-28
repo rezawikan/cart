@@ -35,7 +35,8 @@ Route::resource('images', 'Images\ImageController');
 Route::resource('users', 'User\UserController');
 Route::resource('post', 'Posts\PostController');
 
-Route::get('analytics', 'Analytics\AnalyticsController@analytics');
+Route::get('analytics/{period}', 'Analytics\AnalyticsController@countAnalytics');
+Route::get('revenue/{period}', 'Analytics\AnalyticsController@sumRevenueAnalytics');
 Route::get('livestock', 'Stock\LiveStockController');
 Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
 Route::get('shipping', 'Shipping\ShippingController@index');
@@ -44,9 +45,9 @@ Route::get('shipping', 'Shipping\ShippingController@index');
 
 
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('register', 'Auth\RegisterController@action');
-    Route::post('login', 'Auth\LoginController@action');
-    Route::get('me', 'Auth\MeController@action');
+  Route::post('register', 'Auth\RegisterController@action');
+  Route::post('login', 'Auth\LoginController@action');
+  Route::get('me', 'Auth\MeController@action');
 
     // Route::get('{provider}', 'Auth\LoginController@redirectToProvider');
     // Route::get('{provider}/callback', 'Auth\LoginController@handleProviderCallback');
