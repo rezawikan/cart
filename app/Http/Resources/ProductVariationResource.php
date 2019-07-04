@@ -22,15 +22,27 @@ class ProductVariationResource extends JsonResource
             return ProductVariationResource::collection($this->resource);
         }
 
-
         return [
-          'id'    => $this->id,
-          'name'  => $this->name,
-          'price_varies' => $this->priceVaries(),
-          'stock_count' => (int) $this->stockCount(),
-          'type'  => $this->type,
-          'product' =>  new ProductIndexResource($this->product),
+          'id'      => $this->id,
+          'product' => new ProductIndexResource($this->product),
+          'type'    => new ProductVariationTypeResource($this->type),
+          'name'    => $this->name,
+          'price'   => $this->price,
+          'base_price' => $this->base_price,
           'weight'  => $this->weight
         ];
-    }
+
+      }
+
 }
+
+
+// return [
+//   'id'    => $this->id,
+//   'name'  => $this->name,
+//   'price_varies' => $this->priceVaries(),
+//   'stock_count' => (int) $this->stockCount(),
+//   'type'  => $this->type,
+//   'product' =>  new ProductIndexResource($this->product),
+//   'weight'  => $this->weight
+// ];

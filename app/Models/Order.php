@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Returns;
 use App\Models\Address;
 use App\Models\paymentMethod;
 use App\Models\ShippingMethod;
@@ -33,6 +34,12 @@ class Order extends Model
       'total'
     ];
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public static function boot()
     {
         parent::boot();
@@ -42,31 +49,78 @@ class Order extends Model
         // });
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function total()
     {
-      return $this->subtotal + $this->shippingMethod->price;
+        return $this->subtotal + $this->shippingMethod->price;
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function address()
     {
         return $this->belongsTo(Address::class);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function shippingMethod()
     {
         return $this->belongsTo(shippingMethod::class);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function paymentMethod()
     {
         return $this->belongsTo(paymentMethod::class);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
+    public function returns()
+    {
+        return $this->hasMany(Returns::class);
+    }
+
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function products()
     {
         return $this->belongsToMany(ProductVariation::class, 'product_variation_order')
@@ -74,8 +128,33 @@ class Order extends Model
                 ->withTimestamps();
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function revenue()
     {
         return $this->base_subtotal - $this->discount;
+    }
+
+    public function newSubTotal()
+    {
+        return $this->products->sum(function ($product) {
+            return $product->price * $product->pivot->quantity;
+        });
+    }
+
+    public function newBaseSubTotal()
+    {
+        return $this->products->sum(function ($product) {
+            return $product->base_price * $product->pivot->quantity;
+        });
+    }
+
+    public function newTotal()
+    {
+        return ($this->newSubTotal() - $this->discount) + $this->shippingMethod->price;
     }
 }

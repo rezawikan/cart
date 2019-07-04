@@ -34,6 +34,12 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public static function boot()
     {
         parent::boot();
@@ -65,6 +71,12 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function cart()
     {
         return $this->belongsToMany(ProductVariation::class, 'cart_user')
@@ -72,16 +84,34 @@ class User extends Authenticatable implements JWTSubject
                     ->withTimestamps();
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function addresses()
     {
         return $this->hasMany(Address::class);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function paymentMethods()
     {
         return $this->hasMany(PaymentMethod::class);

@@ -38,6 +38,11 @@ class AnalyticsController extends Controller
     public function countAnalytics(Request $request, $period)
     {
         $orders  = Order::LatestOrder('ASC')->withScopes($this->scopes())->get()->groupBy($period);
+
+        if ($orders->isEmpty()) {
+            return null;
+        }
+
         $numbers = $orders->mapToGroups(function ($items, $key) {
           return [
             'numbers' => count($items)
@@ -55,6 +60,11 @@ class AnalyticsController extends Controller
     public function sumRevenueAnalytics(Request $request, $period)
     {
         $orders  = Order::LatestOrder('ASC')->withScopes($this->scopes())->get()->groupBy($period);
+
+        if ($orders->isEmpty()) {
+            return null;
+        }
+        
         $numbers = $orders->mapToGroups(function ($items, $key) {
           return [
             'revenue' => $items->sum(function($item){

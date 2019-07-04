@@ -19,20 +19,20 @@ class ProductVariationOrderResource extends JsonResource
     {
 
         if ($this->resource instanceof Collection) {
-            return ProductVariationResource::collection($this->resource);
+            return ProductVariationOrderResource::collection($this->resource);
         }
 
 
         return [
-          'id'    => $this->id,
-          'name'  => $this->name,
-          'price_varies' => $this->priceVaries(),
-          'stock_count' => (int) $this->stockCount(),
-          'type'  => $this->type,
-          'product' =>  new ProductIndexResource($this->product),
-          'weight'  => $this->weight,
-          'quantity' => $this->pivot->quantity,
-          'status'  => $this->pivot->status
+          'id'            => $this->id,
+          'name'          => $this->name,
+          'price_varies'  => $this->priceVaries(),
+          'stock_count'   => (int) $this->stockCount(),
+          'type'          => $this->type,
+          'product'       =>  new ProductIndexResource($this->product),
+          'weight'        => $this->weight,
+          'quantity'      => $this->pivot->quantity,
+          'status'        => $this->pivot->status
         ];
     }
 }

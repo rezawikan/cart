@@ -11,6 +11,7 @@ use App\Models\Traits\LatestOrder;
 use App\Models\Stock;
 use App\Pattern\Cart\Money;
 use App\Models\Order;
+use App\Models\Returns;
 
 class ProductVariation extends Model
 {
@@ -106,6 +107,17 @@ class ProductVariation extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
+    public function returns()
+    {
+        return $this->hasMany(Returns::class);
     }
 
     /**

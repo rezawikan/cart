@@ -17,8 +17,9 @@ class SubdistrictResource extends JsonResource
         return [
           'id' => $this->id,
           'city_id' => $this->city_id,
-          'province' => $this->city->province->name,
           'city' => $this->city->name,
+          'province_id' => $this->city->province->id,
+          'province' => $this->city->province->name,
           'subdistrict' => $this->name
         ];
     }

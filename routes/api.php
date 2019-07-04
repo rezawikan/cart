@@ -32,6 +32,7 @@ Route::resource('orders', 'Orders\OrderController');
 Route::resource('public-orders', 'Orders\PublicOrderController');
 Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');
 Route::resource('images', 'Images\ImageController');
+Route::resource('returns', 'Returns\ReturnsController');
 Route::resource('users', 'User\UserController');
 Route::resource('post', 'Posts\PostController');
 

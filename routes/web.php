@@ -11,7 +11,7 @@
 |
 */
 
-use App\Models\ProductVariation;
+use App\Models\Returns;
 use Carbon\Carbon;
 
 Route::get('/','Stock\LiveStockController');
@@ -25,7 +25,10 @@ Route::resource('payment-methods', 'PaymentMethods\PaymentMethodController');
 Route::get('/tes', function(){
   // return Carbon::now()->subYear()->year;
   // return   Carbon::now()->subDays(2);
-  return Carbon::today()->subMonths(12);
+  // return Carbon::today()->subMonths(12);
+  return $return = Returns::find(2)->variation;
+
+  return $return->variation;
   // return is_numeric($a);
   // $variant = ProductVariation::find(1);
   // return $variant->stocks->first();

@@ -20,6 +20,7 @@ class AddressResource extends JsonResource
           'name' => $this->name,
           'address_1' => $this->address_1,
           'subdistrict' => new SubdistrictResource($this->subdistrict),
+          'phone' => $this->phone,
           'default' => (bool) $this->default
         ];
     }

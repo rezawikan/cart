@@ -13,7 +13,13 @@ class ShippingMethod extends Model
       'courier',
       'price'
     ];
-    
+
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function subdistricts()
     {
       return $this->belongsToMany(Subdistrict::class);

@@ -21,7 +21,7 @@ class PublicOrderController extends Controller
 
     public function __construct()
     {
-        // $this->middleware(['auth:api']);
+        $this->middleware(['auth:api']);
         $this->middleware(['cart.isenotempty','cart.sync'])->only('store');
     }
 
@@ -50,13 +50,12 @@ class PublicOrderController extends Controller
           'products',
           'products.stock',
           'products.type',
-          // 'products.product',
-          // 'products.product.variations',
           'products.product.variations.stock',
           'address.subdistrict',
-          'shippingMethod'
+          'shippingMethod',
+          'paymentMethod',
+          'returns'
         ])
-        ->latest()
         ->paginate(12);
 
         return OrderResource::collection($orders);
@@ -80,23 +79,15 @@ class PublicOrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd('test');
-        $user = User::find($request->user_id);
-
-        $cart = new Cart($user);
+        $user  = User::find($request->user_id);
+        $cart  = new Cart($user);
         $order = $this->createOrder($request, $cart);
 
         $order->products()->sync($cart->products()->forSyncing());
-
-        // $pay = $payment->create($order);
-        //
-        // dd($pay);
-
         $order->load(['products']);
-
         $cart->empty();
 
-        // event(new OrderCreated($order));
+        event(new OrderCreated($order));
 
         return new OrderResource($order);
     }
@@ -148,7 +139,7 @@ class PublicOrderController extends Controller
      */
     public function edit($id)
     {
-        //
+      //
     }
 
     /**
@@ -160,7 +151,7 @@ class PublicOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      //
     }
 
     /**

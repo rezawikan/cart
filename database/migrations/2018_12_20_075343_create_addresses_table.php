@@ -20,6 +20,7 @@ class CreateAddressesTable extends Migration
             $table->boolean('default')->default(false);
             $table->string('name');
             $table->string('address_1');
+            $table->string('phone');
             $table->timestamps();
 
 

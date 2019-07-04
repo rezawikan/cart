@@ -19,16 +19,34 @@ class Address extends Model
       'default'
     ];
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function setDefaultAttribute($value)
     {
         $this->attributes['default'] = ($value === 'true' ? true : false);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function subdistrict()
     {
         return $this->hasOne(Subdistrict::class, 'id', 'subdistrict_id');

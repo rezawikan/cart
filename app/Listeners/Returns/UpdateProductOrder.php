@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Listeners\Order;
+namespace App\Listeners\Returns;
 
-use App\Models\Order;
-use App\Events\Orders\OrderPaid;
+use App\Events\Returns\ReturnProduct;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MarkOrderProcessing
+class UpdateProductOrder
 {
     /**
      * Create the event listener.
@@ -22,13 +21,15 @@ class MarkOrderProcessing
     /**
      * Handle the event.
      *
-     * @param  OrderPaid  $event
+     * @param  ReturnProduct  $event
      * @return void
      */
-    public function handle(OrderPaid $event)
+    public function handle(ReturnProduct $event)
     {
       $event->order->update([
-        'status' => Order::COMPLETED
+        'base_subtotal' => $event->order->newBaseSubTotal(),
+        'subtotal' => $event->order->newSubTotal(),
+        'total' => $event->order->newTotal()
       ]);
     }
 }

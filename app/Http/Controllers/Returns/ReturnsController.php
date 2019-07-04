@@ -1,16 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\products;
+namespace App\Http\Controllers\Returns;
 
+use App\Models\Returns;
 use Illuminate\Http\Request;
-use App\Models\ProductVariation;
 use App\Http\Controllers\Controller;
-use App\Scoping\Scopes\Variations\NameScope;
-use App\Http\Resources\ProductVariationResource;
+use App\Events\Returns\ReturnProduct;
+use App\Http\Resources\ReturnsResource;
+use App\Scoping\Scopes\Returns\OrderIdScope;
+use App\Pattern\ReturnProduct\HandleReturnProduct;
 
-class ProductVariationController extends Controller
+class ReturnsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['auth:api']);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -19,20 +25,28 @@ class ProductVariationController extends Controller
     protected function scopes()
     {
         return [
-          'name' => new NameScope(),
+          'order_id'    => new OrderIdScope(),
         ];
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $variations = ProductVariation::LatestOrder()->withScopes($this->scopes())->paginate(10)->appends($request->except('page'));
-        $variations->load(['product','type']);
+        $returns = Returns::LatestOrder()
+        ->with([
+          'variation',
+          'variation.product',
+          'variation.type'
+        ])
+        ->withScopes($this->scopes())
+        ->orderBy('order_id')
+        ->paginate(12);
 
-        return ProductVariationResource::collection($variations);
+        return ReturnsResource::collection($returns);
     }
 
     /**
@@ -51,9 +65,16 @@ class ProductVariationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, HandleReturnProduct $handle)
     {
+        $handle->setRequest($request);
+        $order    = $handle->findOrder();
+        $products = $handle->convertProduct();
+        $returns  = $handle->convertReturn();
         //
+        $order->products()->sync($products);
+        //
+        event(new ReturnProduct($order, $returns));
     }
 
     /**

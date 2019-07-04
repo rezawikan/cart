@@ -13,15 +13,14 @@ use App\Pattern\Cart\Payments\Gateway;
 class ProcessPaymanet implements ShouldQueue
 {
 
-    protected $gateway;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(Gateway $gateway)
+    public function __construct()
     {
-        $this->gateway = $gateway;
+
     }
 
     /**
@@ -35,13 +34,17 @@ class ProcessPaymanet implements ShouldQueue
         $order = $event->order;
 
         try {
-              $this->gateway->withUser($order->user)
-                 ->getCustomer()
-                 ->charge(
-                   $order->paymentMethod, $order->total
-                 );
+              switch ($event->order->paymentMethod->type) {
+                case 'Cash':
+                  event(new OrderPaid($order));
+                  break;
 
-              event(new OrderPaid($order));
+                default:
+                  // code...
+                  break;
+              }
+
+
         } catch (PaymentFailedException $e) {
               event(new OrderPaymentFailed($order));
         }
