@@ -35,14 +35,14 @@ Route::resource('images', 'Images\ImageController');
 Route::resource('returns', 'Returns\ReturnsController');
 Route::resource('users', 'User\UserController');
 Route::resource('post', 'Posts\PostController');
+Route::resource('shipping', 'Shipping\ShippingController');
+Route::resource('shipping-courier', 'Shipping\ShippingCourier');
+
 
 Route::get('analytics/{period}', 'Analytics\AnalyticsController@countAnalytics');
 Route::get('revenue/{period}', 'Analytics\AnalyticsController@sumRevenueAnalytics');
 Route::get('livestock', 'Stock\LiveStockController');
 Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');
-Route::get('shipping', 'Shipping\ShippingController@index');
-
-
 
 
 Route::group(['prefix' => 'auth'], function () {

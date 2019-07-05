@@ -2,23 +2,13 @@
 
 namespace App\Listeners\Order;
 
+use App\Pattern\Cart\Cart;
 use App\Events\Orders\OrderCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Pattern\Cart\Cart;
 
 class EmptyCart
 {
-    protected $cart;
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct(Cart $cart)
-    {
-        $this->cart = $cart;
-    }
 
     /**
      * Handle the event.
@@ -28,6 +18,9 @@ class EmptyCart
      */
     public function handle(OrderCreated $event)
     {
-        $this->cart->empty();
+        $user = User::find($event->order->user_id);
+        $cart = new Cart($user);
+
+        $cart->empty();
     }
 }

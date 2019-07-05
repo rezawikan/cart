@@ -2,24 +2,32 @@
 
 namespace App\Http\Controllers\Shipping;
 
-use Illuminate\Http\Request;
+use App\Models\Subdistrict;
 use App\Models\ShippingMethod;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ShippingResource;
-use App\Http\Resources\ShippingMethodResource;
+use App\Http\Resources\ShippingCourierResource;
 
-class ShippingController extends Controller
+class ShippingCourier extends Controller
 {
-    public function __construct()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $this->middleware(['auth:api']);
-    }
 
-    public function index(Request $request)
-    {
-        $shipping = ShippingMethod::LatestOrder()->paginate(12);
+         $shippingCourier = ShippingMethod::with([
+          'subdistricts',
+          'subdistricts.city',
+          'subdistricts.city.province',
+          ])
+          ->HasSubdistrict()
+          ->OrderByProvince()
+          ->paginate(12);
 
-        return ShippingMethodResource::collection($shipping);
+        return ShippingCourierResource::collection($shippingCourier);
     }
 
     /**
@@ -40,7 +48,9 @@ class ShippingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $shippingMethod = ShippingMethod::create($request->except('subdistrict_id'));
+        $subdistrict = Subdistrict::find($request->subdistrict_id);
+        $subdistrict->shippingMethods()->sync([$shippingMethod->id]);
     }
 
     /**

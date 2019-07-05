@@ -3,23 +3,23 @@
 namespace App\Listeners\Order;
 
 use App\Models\Order;
-use App\Events\Orders\OrderPaymentFailed;
+use App\Events\Orders\OrderCompleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MarkOrderPaymentFailed
+class MarkOrderCompleted
 {
 
     /**
      * Handle the event.
      *
-     * @param  OrderPaymentFailed  $event
+     * @param  OrderCash  $event
      * @return void
      */
-    public function handle(OrderPaymentFailed $event)
+    public function handle(OrderCompleted $event)
     {
         $event->order->update([
-          'status' => Order::PAYMENT_FAILED
+          'status' => Order::COMPLETED
         ]);
     }
 }

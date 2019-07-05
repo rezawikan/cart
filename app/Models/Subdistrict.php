@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\City;
+use App\Models\Province;
 use App\Models\ShippingMethod;
 use App\Models\Traits\CanBeScoped;
+use App\Models\Traits\LatestOrder;
+use App\Models\Traits\HasShippingMethod;
 
 class Subdistrict extends Model
 {
-    use CanBeScoped;
-    
+    use CanBeScoped, LatestOrder, HasShippingMethod;
+
     protected $fillable = [
       'city_id',
       'name'

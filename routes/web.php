@@ -13,7 +13,7 @@
 
 use App\Models\Returns;
 use Carbon\Carbon;
-
+Route::resource('shipping', 'Shipping\ShippingController');
 Route::get('/','Stock\LiveStockController');
 Route::resource('users', 'User\UserController');
 Route::get('addresses/{address}/shipping', 'Addresses\AddressShippingController@action');

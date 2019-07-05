@@ -2,26 +2,16 @@
 
 namespace App\Listeners\Order;
 
-use App\Exceptions\PaymentFailedException;
+use App\Events\Orders\OrderPending;
 use App\Events\Orders\OrderCreated;
-use App\Events\Orders\OrderPaymentFailed;
-use App\Events\Orders\OrderPaid;
+use App\Events\Orders\OrderCompleted;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Events\Orders\OrderPaymentFailed;
+use App\Exceptions\PaymentFailedException;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Pattern\Cart\Payments\Gateway;
 
-class ProcessPaymanet implements ShouldQueue
+class ProcessPayment
 {
-
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
 
     /**
      * Handle the event.
@@ -34,21 +24,22 @@ class ProcessPaymanet implements ShouldQueue
         $order = $event->order;
 
         try {
-              switch ($event->order->paymentMethod->type) {
+              switch ($order->paymentMethod->type) {
                 case 'Cash':
-                  event(new OrderPaid($order));
+                  event(new OrderCompleted($order));
+                  break;
+
+                case 'Bank Transfer':
+                  event(new OrderProcess($order));
                   break;
 
                 default:
-                  // code...
+                  event(new OrderPending($order));
                   break;
               }
-
 
         } catch (PaymentFailedException $e) {
               event(new OrderPaymentFailed($order));
         }
-
-
     }
 }

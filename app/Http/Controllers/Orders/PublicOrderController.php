@@ -85,7 +85,6 @@ class PublicOrderController extends Controller
 
         $order->products()->sync($cart->products()->forSyncing());
         $order->load(['products']);
-        $cart->empty();
 
         event(new OrderCreated($order));
 

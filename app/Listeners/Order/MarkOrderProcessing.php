@@ -9,15 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class MarkOrderProcessing
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
@@ -28,7 +19,7 @@ class MarkOrderProcessing
     public function handle(OrderPaid $event)
     {
       $event->order->update([
-        'status' => Order::COMPLETED
+        'status' => Order::PROCESSING
       ]);
     }
 }
