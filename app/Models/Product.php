@@ -36,6 +36,50 @@ class Product extends Model
     }
 
     /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
+    public function getPriceAttribute($value)
+    {
+        if ($this->variations) {
+            $price = $this->variations->map(function($variant){
+                return $variant->price;
+            });
+
+            return [
+              'min' => min($price),
+              'max' => max($price)
+            ];
+        }
+
+        return $value;
+    }
+
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
+    public function getWeightAttribute($value)
+    {
+        if ($this->variations) {
+            $weight = $this->variations->map(function($variant){
+                return $variant->weight;
+            });
+
+            return [
+              'min' => min($weight),
+              'max' => max($weight)
+            ];
+        }
+
+        return $value;
+    }
+
+    /**
      * Get all of the posts for the country.
      */
     public function type()
