@@ -14,14 +14,16 @@ class ProductIndexResource extends JsonResource
      */
     public function toArray($request)
     {
+      // 'price'      => $this->custom_price,
+      // 'weight'     => $this->custom_weight,
         return [
           'id'          => $this->id,
           'name'        => $this->name,
           'slug'        => $this->slug,
           'description' => $this->description,
-          'weight'      => $this->weight,
+          'weight'      => $this->custom_weight,
           'images'      => $this->images,
-          'price'       => $this->price,
+          'price'       => $this->custom_price,
           'base_price'  => $this->base_price,
           'stock_count' => $this->stockCount(),
           'in_stock'    => $this->inStock(),

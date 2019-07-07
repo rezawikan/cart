@@ -43,7 +43,7 @@ class Product extends Model
      */
     public function getCustomPriceAttribute($value)
     {
-        if (!empty($this->variations)) {
+        if (empty($this->variations)) {
             $price = $this->variations->map(function($variant){
                 return $variant->price;
             })->toArray();
@@ -65,7 +65,7 @@ class Product extends Model
      */
     public function getCustomWeightAttribute($value)
     {
-        if (!empty($this->variations)) {
+        if (empty($this->variations)) {
             $weight = $this->variations->map(function($variant){
                 return $variant->weight;
             })->toArray();
