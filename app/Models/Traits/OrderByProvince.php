@@ -14,11 +14,9 @@ trait OrderByProvince
        */
     public function scopeOrderByProvince(Builder $builder, $value = 'asc')
     {
-        return $builder->whereHas('subdistricts', function($builder) use ($value){
-          return $builder->whereHas('city', function($builder)  use ($value){
-            return $builder->whereHas('province', function($builder)  use ($value){
-              return $builder->orderBy('name', $value);
-            });
+        return $builder->whereHas('city', function($builder)  use ($value){
+          return $builder->whereHas('province', function($builder)  use ($value){
+            return $builder->orderBy('name', $value);
           });
         });
     }

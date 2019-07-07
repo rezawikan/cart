@@ -8,11 +8,12 @@ use App\Models\Province;
 use App\Models\ShippingMethod;
 use App\Models\Traits\CanBeScoped;
 use App\Models\Traits\LatestOrder;
+use App\Models\Traits\OrderByProvince;
 use App\Models\Traits\HasShippingMethod;
 
 class Subdistrict extends Model
 {
-    use CanBeScoped, LatestOrder, HasShippingMethod;
+    use CanBeScoped, LatestOrder, HasShippingMethod, OrderByProvince;
 
     protected $fillable = [
       'city_id',

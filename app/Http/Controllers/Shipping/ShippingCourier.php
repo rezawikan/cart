@@ -18,13 +18,12 @@ class ShippingCourier extends Controller
     public function index()
     {
 
-         $shippingCourier = ShippingMethod::with([
-          'subdistricts',
-          'subdistricts.city',
-          'subdistricts.city.province',
+          $shippingCourier = Subdistrict::with([
+          'shippingMethods',
+          'city',
+          'city.province'
           ])
-          // ->HasSubdistrict()
-          // ->OrderByProvince()
+          ->OrderByProvince()
           ->paginate(12);
 
         return ShippingCourierResource::collection($shippingCourier);
