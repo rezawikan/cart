@@ -28,6 +28,10 @@ class ProcessPayment
                 case 'Cash':
                   event(new OrderCompleted($order));
                   break;
+                  
+                case 'Shopee':
+                  event(new OrderCompleted($order));
+                  break;
 
                 case 'Bank Transfer':
                   event(new OrderProcess($order));

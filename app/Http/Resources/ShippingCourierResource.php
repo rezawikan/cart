@@ -15,11 +15,12 @@ class ShippingCourierResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'subdistrict_id' => $this->id,
-          'subdistrict' => $this->name,
-          'city' => $this->city->name,
-          'province' => $this->city->province->name,
-          'shipping_methods'  => count($this->shippingMethods),
+          'subdistrict_id'    => $this->id,
+          'subdistrict'       => $this->name,
+          'city'              => $this->city->name,
+          'province'          => $this->city->province->name,
+          'numbers'           => count($this->shippingMethods),
+          'shipping_methods'  => $this->shippingMethods
         ];
     }
 }
