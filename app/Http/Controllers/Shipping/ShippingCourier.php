@@ -23,8 +23,8 @@ class ShippingCourier extends Controller
           'subdistricts.city',
           'subdistricts.city.province',
           ])
-          ->HasSubdistrict()
-          ->OrderByProvince()
+          // ->HasSubdistrict()
+          // ->OrderByProvince()
           ->paginate(12);
 
         return ShippingCourierResource::collection($shippingCourier);
