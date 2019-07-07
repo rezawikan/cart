@@ -46,7 +46,7 @@ class Product extends Model
         if ($this->variations) {
             $price = $this->variations->map(function($variant){
                 return $variant->price;
-            });
+            })->toArray();
 
             return [
               'min' => min($price),
@@ -68,7 +68,7 @@ class Product extends Model
         if ($this->variations) {
             $weight = $this->variations->map(function($variant){
                 return $variant->weight;
-            });
+            })->toArray();
 
             return [
               'min' => min($weight),
