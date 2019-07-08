@@ -1,4 +1,4 @@
-return new ProvinceResource(Province::create($request->all()));<?php
+<?php
 
 namespace App\Http\Controllers\Location;use Illuminate\Http\Request;
 
