@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Location;
+namespace App\Http\Controllers\Location;use Illuminate\Http\Request;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubdistrictResource;
 use App\Models\Subdistrict;
