@@ -16,7 +16,8 @@ class ProductEditResource extends JsonResource
     {
       return array_merge(parent::toArray($request), [
         'images'     => $this->images,
-        'variations' => $variations = ProductVariationEditResource::collection($this->variations->groupBy('type.name'))
+        'variations' => $variations = ProductVariationEditResource::collection($this->variations->groupBy('type.name')),
+        'price_varies'     => $this->varies()
       ]);
     }
 }
