@@ -2,20 +2,118 @@
 
 namespace App\Http\Controllers\Location;
 
+use App\Models\Province;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Scoping\Scopes\All\NameScope;
 use App\Http\Resources\ProvinceResource;
-use App\Models\Province;
+use App\Http\Requests\Location\ProvinceStoreRequest;
 
 class ProvinceController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(['auth:api']);
-    // }
-
-    public function index()
+    /**
+     * __construct.
+     */
+    public function __construct()
     {
-        return ProvinceResource::collection(Province::get());
+        $this->middleware(['auth:api']);
+    }
+
+    /**
+     * scope for filters.
+     *
+     * @return \App\Scoping\Scopes\All\NameScope
+     */
+    protected function scopes()
+    {
+        return [
+          'name'    => new NameScope()
+        ];
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \App\Http\Resources\ProvinceResource
+     */
+    public function index(Request $request)
+    {
+        $scope = Province::withScopes($this->scopes());
+
+        if ($request->pagination == true) {
+            $provinces = $scope->paginate(12);
+        } else {
+            $provinces = $scope->get();
+        }
+
+        return ProvinceResource::collection($provinces);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\Location\ProvinceStoreRequest  $request
+     * @return \App\Http\Resources\ProvinceResource
+     */
+    public function store(ProvinceStoreRequest $request)
+    {
+        return new ProvinceResource(Province::create($request->all()));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \App\Http\Resources\ProvinceResource
+     */
+    public function update(Request $request, $id)
+    {
+        $province = Province::findOrFail($id);
+        return new ProvinceResource($province->update($rquest->all()));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \App\Http\Resources\ProvinceResource
+     */
+    public function destroy($id)
+    {
+        $province = Province::findOrFail($id);
+        return new ProvinceResource($province->delete());
     }
 }
