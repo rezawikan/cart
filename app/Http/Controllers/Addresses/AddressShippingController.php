@@ -11,7 +11,6 @@ class AddressShippingController extends Controller
 {
     public function action(Address $address)
     {
-      // return $address;
-      return ShippingMethodResource::collection($address->subdistrict->shippingMethods);
+        return ShippingMethodResource::collection($address->subdistrict->shippingMethods);
     }
 }

@@ -1,4 +1,4 @@
-<?php
+return new ProvinceResource(Province::create($request->all()));<?php
 
 namespace App\Http\Controllers\Location;
 
@@ -52,7 +52,7 @@ class SubdistrictController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return new SubdistrictResource(Subdistrict::create($request->all()));
     }
 
     /**
