@@ -36,9 +36,17 @@ class ProvinceController extends Controller
      *
      * @return \App\Http\Resources\ProvinceResource
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ProvinceResource::collection(Province::withScopes($this->scopes())->get());
+        $scope = Province::withScopes($this->scopes());
+
+        if ($request->pagination == true) {
+            $provinces = $scope->paginate(12);
+        } else {
+            $provinces = $scope->get();
+        }
+
+        return ProvinceResource::collection($provinces);
     }
 
     /**
