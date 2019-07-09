@@ -30,7 +30,7 @@ class ProductVariationController extends Controller
     public function index(Request $request)
     {
         $variations = ProductVariation::LatestOrder()->withScopes($this->scopes())->paginate(10)->appends($request->except('page'));
-        $variations->load(['product','type']);
+        $variations->load(['product','type','stocks']);
 
         return ProductVariationResource::collection($variations);
     }
