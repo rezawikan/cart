@@ -29,7 +29,14 @@ class SubdistrictController extends Controller
      */
     public function index(Request $request)
     {
-        $subdistrict = Subdistrict::withScopes($this->scopes())->get();
+        $scope = Subdistrict::withScopes($this->scopes());
+
+        if ($request->pagination == true) {
+            $subdistrict = $scope->paginate(12);
+        } else {
+            $subdistrict = $scope->get();
+        }
+
         return SubdistrictResource::collection($subdistrict);
     }
 

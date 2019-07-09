@@ -38,7 +38,15 @@ class CityController extends Controller
      */
     public function index(Request $request)
     {
-        return CityResource::collection(City::withScopes($this->scopes())->get());
+        $scope = City::withScopes($this->scopes());
+
+        if ($request->pagination == true) {
+            $cities = $scope->paginate(12);
+        } else {
+            $cities = $scope->get();
+        }
+
+        return CityResource::collection($cities);
     }
 
     /**
