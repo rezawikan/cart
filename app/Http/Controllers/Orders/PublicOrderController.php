@@ -102,7 +102,7 @@ class PublicOrderController extends Controller
         $total = $cart->withShipping($request->shipping_method_id)->withDiscount($request->discount)->total();
         return User::find($request->user_id)->orders()->create(
           array_merge(
-            $request->only(['address_id','shipping_method_id','payment_method_id','discount']),
+            $request->only(['address_id','shipping_method_id','payment_method_id','discount','created_at']),
             ['total' => $total, 'subtotal' => $cart->subTotal(), 'base_subtotal' => $cart->baseSubTotal() - $request->discount ]
             )
         );

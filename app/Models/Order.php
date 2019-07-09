@@ -31,7 +31,8 @@ class Order extends Model
       'subtotal',
       'base_subtotal',
       'discount',
-      'total'
+      'total',
+      'created_at'
     ];
 
     /**
