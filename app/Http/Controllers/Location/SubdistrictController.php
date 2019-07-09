@@ -34,7 +34,7 @@ class SubdistrictController extends Controller
         if ($request->pagination == true) {
             $subdistrict = $scope->paginate(12);
         } else {
-            $subdistrict = $scope->get();
+            $subdistrict = $scope->limit(50)->get();
         }
 
         return SubdistrictResource::collection($subdistrict);

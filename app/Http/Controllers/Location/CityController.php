@@ -43,7 +43,7 @@ class CityController extends Controller
         if ($request->pagination == true) {
             $cities = $scope->paginate(12);
         } else {
-            $cities = $scope->get();
+            $cities = $scope->limit(50)->get();
         }
 
         return CityResource::collection($cities);

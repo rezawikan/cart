@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Order;
 
+use App\Models\USer;
 use App\Pattern\Cart\Cart;
 use App\Events\Orders\OrderCreated;
 use Illuminate\Queue\InteractsWithQueue;

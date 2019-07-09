@@ -2,6 +2,7 @@
 
 namespace App\Events\Orders;
 
+use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,14 +15,15 @@ class OrderProcess
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $order;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
