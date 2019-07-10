@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Returns;
 use App\Models\Address;
-use App\Models\paymentMethod;
+use App\Models\PaymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\ProductVariation;
 use App\Models\Traits\Timeable;
