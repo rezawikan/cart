@@ -6,6 +6,7 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CityResource;
+use App\Scoping\Scopes\All\NameScope;
 use App\Scoping\Scopes\Address\ProvinceScope;
 use App\Http\Requests\Location\CitiesStoreRequest;
 
@@ -28,6 +29,7 @@ class CityController extends Controller
     {
         return [
           'province'    => new ProvinceScope(),
+          'name'        => new NameScope()
         ];
     }
 

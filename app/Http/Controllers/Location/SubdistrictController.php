@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Location;use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\SubdistrictResource;
 use App\Models\Subdistrict;
+use App\Http\Controllers\Controller;
+use App\Scoping\Scopes\All\NameScope;
 use App\Scoping\Scopes\Address\CityScope;
+use App\Http\Resources\SubdistrictResource;
 
 class SubdistrictController extends Controller
 {
@@ -19,6 +20,7 @@ class SubdistrictController extends Controller
     {
         return [
           'city'    => new CityScope(),
+          'name'    => new NameScope()
         ];
     }
 

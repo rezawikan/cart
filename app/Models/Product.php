@@ -22,7 +22,8 @@ class Product extends Model
       'price',
       'description',
       'weight',
-      'base_price'
+      'base_price',
+      'status'
     ];
 
     /**

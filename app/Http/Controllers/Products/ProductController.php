@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Products;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pattern\Product\HandleProduct;
+use App\Scoping\Scopes\Products\NameScope;
+use App\Scoping\Scopes\Products\StatusScope;
+use App\Http\Resources\ProductEditResource;
 use App\Http\Resources\ProductIndexResource;
 use App\Http\Resources\ProductCreateResource;
-use App\Http\Resources\ProductEditResource;
-use App\Scoping\Scopes\Products\CategoryScope;
-use App\Scoping\Scopes\Products\NameScope;
 use App\Scoping\Scopes\Products\PopularScope;
+use App\Scoping\Scopes\Products\CategoryScope;
 use App\Http\Requests\Products\ProductStoreRequest;
-use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -26,7 +27,8 @@ class ProductController extends Controller
         return [
           'slug'    => new CategoryScope(),
           'name'    => new NameScope(),
-          'popular' => new PopularScope()
+          'popular' => new PopularScope(),
+          'status'  => new StatusScope()
         ];
     }
 
