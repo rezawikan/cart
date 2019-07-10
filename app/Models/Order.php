@@ -137,7 +137,7 @@ class Order extends Model
      */
     public function revenue()
     {
-        return $this->base_subtotal - $this->discount;
+        return $this->subtotal - ($this->base_subtotal - $this->discount);
     }
 
     public function newSubTotal()
