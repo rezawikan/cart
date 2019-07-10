@@ -16,7 +16,7 @@ class RevenueAnalyticsResource extends JsonResource
     {
         if (empty($this->resource)) {
             return [
-              'numbers' => [0,0,0,0],
+              'revenue' => [0,0,0,0],
               'status'  => [0,0,0,0]
             ];
         }
