@@ -40,7 +40,7 @@ class AnalyticsController extends Controller
         $orders  = Order::LatestOrder('ASC')->withScopes($this->scopes())->get()->groupBy($period);
 
         if ($orders->isEmpty()) {
-            return null;
+            return new CountAnalyticsResource([]);
         }
 
         $numbers = $orders->mapToGroups(function ($items, $key) {
@@ -62,9 +62,9 @@ class AnalyticsController extends Controller
         $orders  = Order::LatestOrder('ASC')->withScopes($this->scopes())->get()->groupBy($period);
 
         if ($orders->isEmpty()) {
-            return null;
+            return new RevenueAnalyticsResource([]);
         }
-        
+
         $numbers = $orders->mapToGroups(function ($items, $key) {
           return [
             'revenue' => $items->sum(function($item){

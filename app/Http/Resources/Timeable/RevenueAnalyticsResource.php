@@ -14,6 +14,13 @@ class RevenueAnalyticsResource extends JsonResource
      */
     public function toArray($request)
     {
+        if (empty($this->resource)) {
+            return [
+              'numbers' => [0,0,0,0],
+              'status'  => [0,0,0,0]
+            ];
+        }
+
         return [
           'revenue' => $this->resource['revenue'],
           'status'  => $this->resource['status']

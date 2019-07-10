@@ -14,6 +14,13 @@ class CountAnalyticsResource extends JsonResource
      */
     public function toArray($request)
     {
+        if (empty($this->resource)) {
+            return [
+              'numbers' => [0,0,0,0],
+              'status'  => [0,0,0,0]
+            ];
+        }
+
         return [
           'numbers' => $this->resource['numbers'],
           'status'  => $this->resource['status']
