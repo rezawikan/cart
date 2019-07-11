@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::LatestOrder()->withScopes($this->scopes())->paginate(12)->appends($request->except('page'));
+        $products = Product::with(['variations'])->LatestOrder()->withScopes($this->scopes())->paginate(12)->appends($request->except('page'));
 
         return ProductIndexResource::collection($products);
     }

@@ -14,8 +14,6 @@ class ProductIndexResource extends JsonResource
      */
     public function toArray($request)
     {
-      // 'price'      => $this->custom_price,
-      // 'weight'     => $this->custom_weight,
         return [
           'id'          => $this->id,
           'name'        => $this->name,

@@ -35,6 +35,7 @@ class ProductVariationEditResource extends JsonResource
           'name' => $this->product->name
         ],
         'weight'  => $this->weight,
+        'deleteable'  => $this->deleteable(),
       ];
     }
 }
