@@ -120,13 +120,11 @@ class Product extends Model
             return [true];
         });
 
-
         if (is_array($delete)) {
             return in_array(true, $delete);
         } else {
             return false;
         }
-        
     }
 
 
