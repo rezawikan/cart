@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
-
+use App\Http\Resources\ProductVariationEditResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductIndexResource extends JsonResource
@@ -25,7 +25,8 @@ class ProductIndexResource extends JsonResource
           'base_price'  => $this->base_price,
           'stock_count' => $this->stockCount(),
           'in_stock'    => $this->inStock(),
-          'price_varies' => $this->varies()
+          'price_varies' => $this->varies(),
+          'deleteable'  => $this->deleteable()
         ];
     }
 }

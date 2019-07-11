@@ -110,6 +110,19 @@ class Product extends Model
         return $this->hasMany(ProductVariation::class)->orderBy('order', 'asc');
     }
 
+    public function deleteable()
+    {
+        $delete =  $this->variations->map(function($variant){
+            return $variant->deleteable();
+        })->filter(function($variant){
+            return $variant == false;
+        })->whenEmpty(function ($variant) {
+            return [true];
+        });
+
+        return $delete[0] == true;
+    }
+
 
     /**
      * Block comment
