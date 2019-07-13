@@ -18,6 +18,7 @@ class CartProductVariationResource extends ProductVariationResource
     {
         return array_merge(parent::toArray($request), [
           'product' => new ProductIndexResource($this->product),
+          'type'    => $this->type,
           'weight' =>  $this->weight * $this->pivot->quantity,
           'quantity' => $this->pivot->quantity,
           'total'    => $this->getTotal(),
