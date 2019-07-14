@@ -21,6 +21,7 @@ class Order extends Model
     const PROCESSING = 'processing';
     const PAYMENT_FAILED = 'payment_failed';
     const COMPLETED = 'completed';
+    const EXPIRED = 'expired';
 
     protected $fillable = [
       'user_id',
@@ -125,8 +126,19 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(ProductVariation::class, 'product_variation_order')
-                ->withPivot(['quantity','status'])
+                ->withPivot(['quantity','status','original_price'])
                 ->withTimestamps();
+    }
+
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
+    public function shippingPrice()
+    {
+        return ($this->total + $this->discount) - $this->subtotal;
     }
 
     /**
@@ -140,6 +152,12 @@ class Order extends Model
         return $this->subtotal - ($this->base_subtotal - $this->discount);
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function newSubTotal()
     {
         return $this->products->sum(function ($product) {
@@ -147,6 +165,12 @@ class Order extends Model
         });
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function newBaseSubTotal()
     {
         return $this->products->sum(function ($product) {
@@ -154,6 +178,12 @@ class Order extends Model
         });
     }
 
+    /**
+     * Block comment
+     *
+     * @param type
+     * @return void
+     */
     public function newTotal()
     {
         return ($this->newSubTotal() - $this->discount) + $this->shippingMethod->price;

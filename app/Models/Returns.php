@@ -29,7 +29,7 @@ class Returns extends Model
      */
     public function variation()
     {
-      return $this->belongsTo(ProductVariation::class,'id');
+      return $this->belongsTo(ProductVariation::class,'product_variation_id','id');
     }
 
     /**

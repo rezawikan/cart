@@ -24,15 +24,16 @@ class ProductVariationOrderResource extends JsonResource
 
 
         return [
-          'id'            => $this->id,
-          'name'          => $this->name,
-          'price_varies'  => $this->priceVaries(),
-          'stock_count'   => (int) $this->stockCount(),
-          'type'          => $this->type,
-          'product'       =>  new ProductIndexResource($this->product),
-          'weight'        => $this->weight,
-          'quantity'      => $this->pivot->quantity,
-          'status'        => $this->pivot->status
+          'id'             => $this->id,
+          'name'           => $this->name,
+          'price_varies'   => $this->priceVaries(),
+          'stock_count'    => (int) $this->stockCount(),
+          'type'           => $this->type,
+          'product'        =>  new ProductIndexResource($this->product),
+          'weight'         => $this->weight,
+          'quantity'       => $this->pivot->quantity,
+          'original_price' => $this->pivot->original_price,
+          'status'         => $this->pivot->status
         ];
     }
 }

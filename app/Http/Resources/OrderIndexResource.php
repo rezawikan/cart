@@ -8,7 +8,7 @@ use App\Http\Resources\ShippingMethodResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ProductVariationOrderResource;
 
-class OrderResource extends JsonResource
+class OrderIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -26,17 +26,11 @@ class OrderResource extends JsonResource
           'base_subtotal'   => $this->base_subtotal,
           'discount'        => $this->discount,
           'total'           => $this->total,
-          'products'        => ProductVariationOrderResource::collection($this->whenLoaded('products')),
-          'address'         => new AddressResource($this->whenLoaded('address')),
-          'shipping'        => new ShippingMethodResource($this->whenLoaded('shippingMethod')),
           'shipping_price'  => $this->shippingPrice(),
-          'payment_method'  => $this->paymentMethod->type,
-          'revenue'         => $this->revenue(),
-          'customer'        => $this->user,
+          'products'        => ProductVariationOrderResource::collection($this->whenLoaded('products')),
           'quantity'        => $this->products->sum(function($product){
               return $product->pivot->quantity;
-          }),
-          'returns'         => new ReturnOrderResource($this->whenLoaded('returns'))
+          })
         ];
     }
 }

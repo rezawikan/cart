@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Models\ProductVariation;
 use App\Models\Product;
+use App\Models\Order;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
 
+        Route::model('public_order', Order::class);
         Route::model('product', Product::class);
         Route::model('ProductVariation', ProductVariation::class);
     }

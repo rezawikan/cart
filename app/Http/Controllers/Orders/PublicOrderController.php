@@ -11,6 +11,8 @@ use App\Events\Orders\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Scoping\Scopes\Orders\IDScope;
+use App\Http\Resources\OrderIndexResource;
+use  App\Scoping\Scopes\Orders\StatusScope;
 use App\Http\Requests\Order\OrderStoreRequest;
 use App\Http\Requests\Addresses\AddressStoreRequest;
 
@@ -21,7 +23,7 @@ class PublicOrderController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:api']);
+        // $this->middleware(['auth:api']);
         $this->middleware(['cart.isenotempty','cart.sync'])->only('store');
     }
 
@@ -33,7 +35,8 @@ class PublicOrderController extends Controller
     protected function scopes()
     {
         return [
-          'id'    => new IDScope(),
+          'id'      => new IDScope(),
+          'status'  => new StatusScope()
         ];
     }
 
@@ -47,6 +50,7 @@ class PublicOrderController extends Controller
         $orders = Order::LatestOrder()
         ->withScopes($this->scopes())
         ->with([
+          'user',
           'products',
           'products.stock',
           'products.type',
@@ -58,7 +62,7 @@ class PublicOrderController extends Controller
         ])
         ->paginate(12);
 
-        return OrderResource::collection($orders);
+        return OrderIndexResource::collection($orders);
     }
 
     /**
@@ -82,13 +86,13 @@ class PublicOrderController extends Controller
         $user  = User::find($request->user_id);
         $cart  = new Cart($user);
         $order = $this->createOrder($request, $cart);
-
+        
         $order->products()->sync($cart->products()->forSyncing());
         $order->load(['products']);
 
         event(new OrderCreated($order));
 
-        return new OrderResource($order);
+        return new OrderIndexResource($order);
     }
 
     /**
@@ -125,9 +129,20 @@ class PublicOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
+        $order->load([
+          'products',
+          'products.stock',
+          'products.type',
+          'products.product.variations.stock',
+          'address.subdistrict',
+          'shippingMethod',
+          'paymentMethod',
+          'returns'
+        ]);
+
+        return new OrderResource($order);
     }
 
     /**

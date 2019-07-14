@@ -37,7 +37,7 @@ class CreateProductVariationStockView extends Migration
         			product_variation_order.product_variation_id as id,
         			SUM(product_variation_order.quantity) as quantity
         		FROM product_variation_order
-            JOIN orders ON orders.id = product_variation_order.order_id AND orders.status != 'payment failed'
+            JOIN orders ON orders.id = product_variation_order.order_id AND orders.status != 'payment_failed' AND orders.status != 'expired'
         		GROUP BY product_variation_order.product_variation_id
         	) AS product_variation_order USING (id)
         	GROUP BY product_variations.id

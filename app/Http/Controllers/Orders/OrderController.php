@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderStoreRequest;
 use App\Http\Requests\Addresses\AddressStoreRequest;
 use App\Events\Orders\OrderCreated;
-use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrderIndexResource;
 use App\Payment\PaymentHandler;
 
 class OrderController extends Controller
@@ -42,7 +42,7 @@ class OrderController extends Controller
         ->latest()
         ->paginate(10);
 
-        return OrderResource::collection($orders);
+        return OrderIndexResource::collection($orders);
     }
 
     /**
@@ -75,7 +75,7 @@ class OrderController extends Controller
 
         event(new OrderCreated($order));
 
-        return new OrderResource($order);
+        return new OrderIndexResource($order);
     }
 
     /**
