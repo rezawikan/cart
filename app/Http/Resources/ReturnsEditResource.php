@@ -16,16 +16,17 @@ class ReturnsEditResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'id'              => $this->id,
-          'order_id'        => $this->order_id,
+          'id'                   => $this->id,
+          'order_id'             => $this->order_id,
           'product_variation_id' => $this->product_variation_id,
-          'variation_name'  => $this->variation->name,
-          'product_name'    => $this->variation->product->name,
-          'product_type'    => $this->variation->type->name,
-          'quantity'        => $this->quantity,
-          'status'          => $this->status,
-          'info'            => $this->info,
-          'order'           => new OrderIndexResource($this->order)
+          'original_price'       => $this->original_price,
+          'variation_name'       => $this->variation->name,
+          'product_name'         => $this->variation->product->name,
+          'product_type'         => $this->variation->type->name,
+          'quantity'             => $this->quantity,
+          'status'               => $this->status,
+          'info'                 => $this->info,
+          'order'                => new OrderIndexResource($this->order)
         ];
     }
 }
