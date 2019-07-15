@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Events\Returns\ReturnProduct;
 use App\Http\Resources\ReturnsResource;
+use App\Http\Resources\ReturnsEditResource;
 use App\Scoping\Scopes\Returns\OrderIdScope;
 use App\Pattern\ReturnProduct\HandleReturnProduct;
 
@@ -15,7 +16,7 @@ class ReturnsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:api']);
+        // $this->middleware(['auth:api']);
     }
     /**
      * Show the form for creating a new resource.
@@ -83,9 +84,10 @@ class ReturnsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Returns $returns)
     {
-        //
+        $returns->load(['order.products']);
+        return new ReturnsEditResource($returns);
     }
 
     /**

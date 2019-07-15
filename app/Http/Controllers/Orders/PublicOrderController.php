@@ -86,7 +86,7 @@ class PublicOrderController extends Controller
         $user  = User::find($request->user_id);
         $cart  = new Cart($user);
         $order = $this->createOrder($request, $cart);
-        
+
         $order->products()->sync($cart->products()->forSyncing());
         $order->load(['products']);
 

@@ -17,6 +17,7 @@ class Returns extends Model
       'product_variation_id',
       'order_id',
       'quantity',
+      'original_price',
       'status',
       'info'
     ];

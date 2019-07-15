@@ -18,7 +18,7 @@ class CreateReturnsTable extends Migration
             $table->integer('product_variation_id')->unsigned()->index();
             $table->integer('order_id')->unsigned()->index();
             $table->integer('quantity');
-            $table->string('status')->default('processing');
+            $table->string('status')->default('checking');
             $table->string('info')->default('none'); //  none and fixed
             $table->timestamps();
 

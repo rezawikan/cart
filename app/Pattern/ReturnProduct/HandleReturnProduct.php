@@ -33,7 +33,8 @@ class HandleReturnProduct
         return [
           'order_id' => (int) $this->request->order_id,
           'product_variation_id' => $value['id'],
-          'quantity' => $value['quantity']
+          'quantity' => $value['quantity'],
+          'original_price' => $value['original_price']
         ];
       })->reject(function ($value) {
           return empty($value['quantity']);
