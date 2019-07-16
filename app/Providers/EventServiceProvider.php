@@ -35,9 +35,14 @@ class EventServiceProvider extends ServiceProvider
           'App\Listeners\Order\MarkOrderCompleted'
         ],
 
-        'App\Events\Returns\ReturnProduct' => [
-          'App\Listeners\Returns\UpdateProductOrder',
-          'App\Listeners\Returns\CreateReturnOrder',
+        'App\Events\ReturnCreate\ReturnCreate' => [
+          'App\Listeners\ReturnCreate\UpdateOrder',
+          'App\Listeners\ReturnCreate\CreateReturn',
+        ],
+
+        'App\Events\ReturnUpdate\ReturnUpdate' => [
+          'App\Listeners\ReturnUpdate\UpdateVariationOrder',
+          'App\Listeners\ReturnUpdate\UpdateOrder',
         ],
     ];
 

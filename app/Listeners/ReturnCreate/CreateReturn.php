@@ -1,32 +1,22 @@
 <?php
 
-namespace App\Listeners\Returns;
+namespace App\Listeners\ReturnCreate;
 
-use App\Events\Returns\ReturnProduct;
-use App\Models\Returns;
 use Carbon\Carbon;
+use App\Models\Returns;
+use App\Events\ReturnCreate\ReturnCreate;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CreateReturnOrder
+class CreateReturn
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *
-     * @param  ReturnProduct  $event
+     * @param  ReturnCreate  $event
      * @return void
      */
-    public function handle(ReturnProduct $event)
+    public function handle(ReturnCreate $event)
     {
         $returns = collect($event->returns)->map(function($return){
           return array_merge($return, [
@@ -34,7 +24,6 @@ class CreateReturnOrder
             'updated_at' => Carbon::now()
           ]);
         })->toArray();
-
         Returns::insert($returns);
     }
 }

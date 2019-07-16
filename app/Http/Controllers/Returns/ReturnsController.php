@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Returns;
 use App\Models\Returns;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Events\Returns\ReturnProduct;
+use App\Events\ReturnCreate\ReturnCreate;
 use App\Http\Resources\ReturnsResource;
 use App\Http\Resources\ReturnsEditResource;
 use App\Scoping\Scopes\Returns\OrderIdScope;
@@ -75,7 +75,7 @@ class ReturnsController extends Controller
         //
         $order->products()->sync($products);
         //
-        event(new ReturnProduct($order, $returns));
+        event(new ReturnCreate($order, $returns));
     }
 
     /**
@@ -108,9 +108,46 @@ class ReturnsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Returns $returns)
     {
-        //
+      // event(new ReturnUpdate($request, $returns));
+      // $returns->update($request->only(['quantity','info','status']));
+
+      $variantOrder = $returns->order->products->where('pivot.product_variation_id', $request->origin)->first();
+      if ($request->quantity > $returns->quantity) {
+          $returns->order->products()->updateExistingPivot($variantOrder->id, [
+            'quantity' => $request->quantity - ($returns->quantity+1),
+            'status' => $request->status
+          ]);
+
+          $returns->update($request->only(['quantity','info','status']));
+
+
+          $returns->order()->update([
+            'base_subtotal' => $returns->order->newBaseSubTotal(),
+            'subtotal' => $returns->order->newSubTotal(),
+            'total' =>   $returns->order->newTotal()
+          ]);
+
+
+      } elseif ($request->quantity < $returns->quantity) {
+          $returns->order->products()->updateExistingPivot($variantOrder->id, [
+            'quantity' => $returns->quantity - $request->quantity,
+            'status' => $request->status
+          ]);
+
+          $returns->update($request->only(['quantity','info','status']));
+
+          $returns->order()->update([
+            'base_subtotal' => $returns->order->newBaseSubTotal(),
+            'subtotal' => $returns->order->newSubTotal(),
+            'total' =>   $returns->order->newTotal()
+          ]);
+
+      } else {
+          $returns->update($request->only(['quantity','info','status']));
+      }
+
     }
 
     /**

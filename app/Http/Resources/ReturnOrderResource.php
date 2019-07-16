@@ -21,6 +21,7 @@ class ReturnOrderResource extends JsonResource
         }
 
         return [
+          'id'             => $this->id,
           'variation_name' => $this->variation->name,
           'product_name'   => $this->variation->product->name,
           'type_name'      => $this->variation->type->name,
