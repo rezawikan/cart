@@ -16,19 +16,10 @@ class UpdateVariationOrder
      */
     public function handle(ReturnUpdate $event)
     {
-        $variantOrder = $event->returns->order->products->where('pivot.product_variation_id', $event->request->origin)->first();
-        if ($event->request->quantity > $event->returns->quantity) {
-            $event->returns->order->products()->updateExistingPivot($variantOrder['id'], [
-              'quantity' => $event->request->quantity - ($event->returns->quantity+1),
-              'status'   => $event->request->status
-            ]);
-
-
-        } elseif ($event->request->quantity < $event->returns->quantity) {
-            $event->returns->order->products()->updateExistingPivot($variantOrder['id'], [
-              'quantity' => $event->returns->quantity - $event->request->quantity,
-              'status'   => $event->request->status
-            ]);
-        }
+        $variantOrder = $event->returns->order->products->where('pivot.product_variation_id', $event->request->product_variation_id)->first();
+        $event->returns->order->products()->updateExistingPivot($variantOrder->id, [
+          'quantity' => ($variantOrder->pivot->quantity + $event->returns->quantity) - $event->request->quantity,
+          'status'   => $event->request->status
+        ]);
     }
 }

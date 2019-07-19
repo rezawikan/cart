@@ -6,6 +6,7 @@ use App\Models\Returns;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Events\ReturnCreate\ReturnCreate;
+use App\Events\ReturnUpdate\ReturnUpdate;
 use App\Http\Resources\ReturnsResource;
 use App\Http\Resources\ReturnsEditResource;
 use App\Scoping\Scopes\Returns\OrderIdScope;
@@ -110,43 +111,50 @@ class ReturnsController extends Controller
      */
     public function update(Request $request, Returns $returns)
     {
-      // event(new ReturnUpdate($request, $returns));
-      // $returns->update($request->only(['quantity','info','status']));
+      event(new ReturnUpdate($request, $returns));
+      $returns->update($request->only(['quantity','info','status']));
+      //
 
-      $variantOrder = $returns->order->products->where('pivot.product_variation_id', $request->origin)->first();
-      if ($request->quantity > $returns->quantity) {
-          $returns->order->products()->updateExistingPivot($variantOrder->id, [
-            'quantity' => $request->quantity - ($returns->quantity+1),
-            'status' => $request->status
-          ]);
+      // if ($request->quantity > $returns->quantity) {
+      //
+      //     return 'masuk';
 
-          $returns->update($request->only(['quantity','info','status']));
+          // $returns->order->products()->updateExistingPivot($request->product_variation_id, [
+          //   'quantity' => $request->quantity - ($returns->quantity+1),
+          //   'status' => $request->status
+          // ]);
+
+          // $returns->update($request->only(['quantity','info','status']));
+          //
+          //
+          // $returns->order()->update([
+          //   'base_subtotal' => $returns->order->newBaseSubTotal(),
+          //   'subtotal' => $returns->order->newSubTotal(),
+          //   'total' =>   $returns->order->newTotal()
+          // ]);
 
 
-          $returns->order()->update([
-            'base_subtotal' => $returns->order->newBaseSubTotal(),
-            'subtotal' => $returns->order->newSubTotal(),
-            'total' =>   $returns->order->newTotal()
-          ]);
+      // } elseif ($request->quantity < $returns->quantity) {
+      //    $variantOrder = $returns->order->products->where('pivot.product_variation_id', $request->product_variation_id)->first();
+      //    return ($variantOrder->pivot->quantity + $returns->quantity) - $request->quantity;
+      //    return  ;
+          // $returns->order->products()->updateExistingPivot($variantOrder->id, [
+          //   'quantity' => $returns->quantity - $request->quantity,
+          //   'status' => $request->status
+          // ]);
 
+          // $returns->update($request->only(['quantity','info','status']));
+          //
+          // $returns->order()->update([
+          //   'base_subtotal' => $returns->order->newBaseSubTotal(),
+          //   'subtotal' => $returns->order->newSubTotal(),
+          //   'total' =>   $returns->order->newTotal()
+          // ]);
 
-      } elseif ($request->quantity < $returns->quantity) {
-          $returns->order->products()->updateExistingPivot($variantOrder->id, [
-            'quantity' => $returns->quantity - $request->quantity,
-            'status' => $request->status
-          ]);
-
-          $returns->update($request->only(['quantity','info','status']));
-
-          $returns->order()->update([
-            'base_subtotal' => $returns->order->newBaseSubTotal(),
-            'subtotal' => $returns->order->newSubTotal(),
-            'total' =>   $returns->order->newTotal()
-          ]);
-
-      } else {
-          $returns->update($request->only(['quantity','info','status']));
-      }
+      // } else {
+      //   return 'takada';
+      //     // $returns->update($request->only(['quantity','info','status']));
+      // }
 
     }
 

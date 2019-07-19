@@ -41,8 +41,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         'App\Events\ReturnUpdate\ReturnUpdate' => [
-          'App\Listeners\ReturnUpdate\UpdateVariationOrder',
           'App\Listeners\ReturnUpdate\UpdateOrder',
+          'App\Listeners\ReturnUpdate\UpdateVariationOrder'
         ],
     ];
 
