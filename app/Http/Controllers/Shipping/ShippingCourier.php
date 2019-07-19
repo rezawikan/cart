@@ -10,6 +10,11 @@ use App\Http\Resources\ShippingCourierResource;
 
 class ShippingCourier extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth:api'])->only('store');
+    }
     /**
      * Display a listing of the resource.
      *

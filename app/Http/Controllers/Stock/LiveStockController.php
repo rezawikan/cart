@@ -9,6 +9,12 @@ use App\Http\Resources\LiveStockResource;
 
 class LiveStockController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth:api']);
+    }
+
     /**
     * Show the profile for the given user.
     *

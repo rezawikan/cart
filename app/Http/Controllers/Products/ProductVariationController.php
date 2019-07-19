@@ -10,6 +10,10 @@ use App\Http\Resources\ProductVariationResource;
 
 class ProductVariationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:api'])->except(['index','show']);
+    }
 
     /**
      * Show the form for creating a new resource.

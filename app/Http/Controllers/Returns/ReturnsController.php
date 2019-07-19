@@ -17,7 +17,7 @@ class ReturnsController extends Controller
 
     public function __construct()
     {
-        // $this->middleware(['auth:api']);
+        $this->middleware(['auth:api']);
     }
     /**
      * Show the form for creating a new resource.

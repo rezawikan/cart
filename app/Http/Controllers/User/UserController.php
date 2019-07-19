@@ -12,6 +12,11 @@ use App\Http\Resources\PrivateUserResource;
 
 class UserController extends Controller
 {
+  
+    public function __construct()
+    {
+        $this->middleware(['auth:api']);
+    }
 
     /**
      * Show the form for creating a new resource.
