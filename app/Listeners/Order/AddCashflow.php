@@ -21,9 +21,9 @@ class AddCashflow
         $latest = Cashflow::latest()->first();
         Cashflow::create([
           'type'    => 'debit',
-          'amount'  => $event->order->revenue(),
+          'amount'  => $total = $event->order->subtotal - $event->order->discount ,
           'info'    => 'Revenue from order id : '.$event->order->id,
-          'total'   => ($latest['total'] ? $latest['total'] : 0) + $event->order->revenue(), //only first time
+          'total'   => (empty($latest) ? 0 : $latest->total) + $total //only first time
         ]);
 
     }

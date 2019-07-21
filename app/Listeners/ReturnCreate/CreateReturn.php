@@ -4,6 +4,7 @@ namespace App\Listeners\ReturnCreate;
 
 use Carbon\Carbon;
 use App\Models\Returns;
+use App\Models\Cashflow;
 use App\Events\ReturnCreate\ReturnCreate;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,6 +19,20 @@ class CreateReturn
      */
     public function handle(ReturnCreate $event)
     {
+        $discount = $event->order->discount / count($event->order->products);
+        $total = collect($event->returns)->sum(function($return) use ($discount){
+          return ($return['original_price'] * $return['quantity']) - ($discount * $return['quantity']);
+        });
+
+        $latest = Cashflow::latest()->first();
+        Cashflow::create([
+          'type'    => 'credit',
+          'amount'  => $total,
+          'info'    => 'Credit Return from order id : '.$event->order->id,
+          'total'   => (empty($latest) ? 0 : $latest->total) - $total //only first time
+        ]);
+
+
         $returns = collect($event->returns)->map(function($return){
           return array_merge($return, [
             'created_at' => Carbon::now(),

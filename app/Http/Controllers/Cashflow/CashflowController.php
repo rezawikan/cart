@@ -40,19 +40,7 @@ class CashflowController extends Controller
     public function store(Request $request)
     {
 
-        $latest = Cashflow::latest()->first();
-        if ($request->type == 'debit') {
-            $total = $latest->total + $request->amount;
-        } else {
-            $total = $latest->total - $request->amount;
-        }
-
-        Cashflow::create([
-          'type'   => $request->type,
-          'info'   => $request->info,
-          'amount' => $request->amount,
-          'total'  => $total
-        ]);
+        Cashflow::create($request->all());
     }
 
     /**
