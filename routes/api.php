@@ -37,6 +37,8 @@ Route::resource('users', 'User\UserController');
 Route::resource('post', 'Posts\PostController');
 Route::resource('shipping', 'Shipping\ShippingController');
 Route::resource('shipping-courier', 'Shipping\ShippingCourier');
+Route::resource('shipping-auto', 'Shipping\ShippingAuto');
+Route::resource('cashflow', 'Cashflow\CashflowController');
 
 
 Route::get('analytics/{period}', 'Analytics\AnalyticsController@countAnalytics');

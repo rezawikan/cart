@@ -32,6 +32,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         'App\Events\Orders\OrderCompleted' => [
+          'App\Listeners\Order\AddCashflow',
           'App\Listeners\Order\MarkOrderCompleted'
         ],
 

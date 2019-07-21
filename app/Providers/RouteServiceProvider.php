@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Models\ProductVariation;
+use App\Models\Subdistrict;
+use App\Models\Cashdlow;
 use App\Models\Returns;
 use App\Models\Product;
 use App\Models\Order;
@@ -32,6 +34,8 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
 
+        Route::model('cashflow', Cashflow::class);
+        Route::model('shipping-auto', Subdistrict::class);
         Route::model('return', Returns::class);
         Route::model('public_order', Order::class);
         Route::model('product', Product::class);
