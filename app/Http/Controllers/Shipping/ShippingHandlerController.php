@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Shipping\Shipping as Sender;
 use App\Http\Resources\ShippingResource;
+use App\Http\Resources\ShipmentHanlderResource;
+
 
 class ShippingHandlerController extends Controller
 {
@@ -14,6 +16,44 @@ class ShippingHandlerController extends Controller
     public function setProvider(string $provider)
     {
         $this->provider = new Sender($provider);
+    }
+
+    public function provinces(Request $request)
+    {
+        if (empty($request->type)) {
+            return [];
+        }
+        $this->setProvider($request->type);
+        return new ShipmentHanlderResource($this->provider->shipping->getProvince($request->except('type')));
+    }
+
+    public function cities(Request $request)
+    {
+        if (empty($request->type)) {
+            return [];
+        }
+        $this->setProvider($request->type);
+        return new ShipmentHanlderResource($this->provider->shipping->getCity($request->except('type')));
+    }
+
+    public function subdistricts(Request $request)
+    {
+        if (empty($request->type)) {
+            return [];
+        }
+        $this->setProvider($request->type);
+        return new ShipmentHanlderResource($this->provider->shipping->getSubdistrict($request->except('type')));
+    }
+
+    public function cost(Request $request)
+    {
+        if (empty($request->type)) {
+            return [];
+        }
+
+        // return $request->all();
+        $this->setProvider($request->type);
+        return new ShipmentHanlderResource($this->provider->shipping->getCost($request->except('type')));
     }
 
     public function index()

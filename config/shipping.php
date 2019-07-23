@@ -19,7 +19,7 @@ return [
     /**
     * pos, tiki, jne, slis, expedito
     */
-    'international_courier' => 'pos:tiki:jne:slis:expedito',
+    // 'international_courier' => 'pos:tiki:jne:slis:expedito',
 
     /**
     * Denpasar Barat => 114
@@ -35,7 +35,7 @@ return [
     * dse, slis, first,
     * ncs, star, ninja, lion, idl
     */
-    'national_courier' => 'jne:post:tiki:jnt',
+    // 'national_courier' => 'jne:post:tiki:jnt',
 
     'key' => 'da06ea1541fd27c887829f63b8a05fba'
 ];

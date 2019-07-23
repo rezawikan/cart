@@ -39,7 +39,10 @@ Route::resource('shipping', 'Shipping\ShippingController');
 Route::resource('shipping-courier', 'Shipping\ShippingCourier');
 Route::resource('shipping-auto', 'Shipping\ShippingAuto');
 Route::resource('cashflow', 'Cashflow\CashflowController');
-
+Route::get('shipment/provinces', 'Shipping\ShippingHandlerController@provinces');
+Route::get('shipment/cities', 'Shipping\ShippingHandlerController@cities');
+Route::get('shipment/subdistricts', 'Shipping\ShippingHandlerController@subdistricts');
+Route::get('shipment/cost', 'Shipping\ShippingHandlerController@cost');
 
 Route::get('analytics/{period}', 'Analytics\AnalyticsController@countAnalytics');
 Route::get('revenue/{period}', 'Analytics\AnalyticsController@sumRevenueAnalytics');

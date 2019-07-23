@@ -5,14 +5,12 @@ namespace App\Shipping\Types;
 use App\Shipping\Contracts\ShippingMethod;
 use App\Http\Resources\ShippingResource;
 use GuzzleHttp\Client;
-use App\Shipping\ShippingTraits;
 
 /**
  *
  */
 class National extends ShippingMethod
 {
-    use ShippingTraits;
 
     protected $client;
 
@@ -23,18 +21,41 @@ class National extends ShippingMethod
 
     /**
      * Default is nuLL
+     * param 'id' is province ID (OPTIONAL)
+     * @param array
+     * @return json
+     */
+    public function getProvince(array $data = [])
+    {
+        $query = [
+        'query' => [
+          'key' => config('shipping.key')
+        ]
+      ];
+
+        if (!empty($data['id'])) {
+            $query['query']['id'] = $data['id'];
+        }
+
+        $response = $this->client->request('GET', 'https://pro.rajaongkir.com/api/province', $query);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Default is nuLL
      * param 'id' is Region ID (OPTIONAL)
      * param 'province' is province ID (OPTIONAL)
      * @param array
      * @return json
      */
-    public function getOrigin(array $data = [])
+    public function getCity(array $data = [])
     {
         $query = [
-          'query' => [
-            'key' => config('shipping.key')
-          ]
-        ];
+        'query' => [
+          'key' => config('shipping.key')
+        ]
+      ];
 
         if (!empty($data['id'])) {
             $query['query']['id'] = $data['id'];
@@ -44,30 +65,32 @@ class National extends ShippingMethod
             $query['query']['province'] = $data['province'];
         }
 
-        $response = $this->client->request('GET', 'https://pro.rajaongkir.com/api/v2/internationalOrigin', $query);
+        $response = $this->client->request('GET', 'https://pro.rajaongkir.com/api/city', $query);
 
         return json_decode($response->getBody(), true);
     }
 
     /**
      * Default is nuLL
-     * param 'id' is ID Country (OPTIONAL)
+     * param 'city' is Region ID (REQUIRED)
+     * param 'id' is Subdistrict ID (OPTIONAL)
      * @param array
      * @return json
      */
-    public function getDestination(array $data = [])
+    public function getSubdistrict(array $data = [])
     {
         $query = [
-          'query' => [
-            'key' => config('shipping.key')
-          ]
-        ];
+        'query' => [
+          'key' => config('shipping.key'),
+          'city' => $data['city']
+        ]
+      ];
 
         if (!empty($data['id'])) {
             $query['query']['id'] = $data['id'];
         }
 
-        $response = $this->client->request('GET', 'https://pro.rajaongkir.com/api/v2/internationalDestination', $query);
+        $response = $this->client->request('GET', 'https://pro.rajaongkir.com/api/subdistrict', $query);
 
         return json_decode($response->getBody(), true);
     }
@@ -87,14 +110,16 @@ class National extends ShippingMethod
         $query = [
           'form_params' => [
             'key' => config('shipping.key'),
-            'origin' => $data['origin'],
+            'origin' => config('shipping.national_subdistrict_id'),
             'originType' => 'subdistrict',
             'destination' => $data['destination'],
             'destinationType' => 'subdistrict',
-            'courier' => config('shipping.national_courier'),
-            'weight' => $data['weight']
+            'courier' => !empty($data['courier']) ? $data['courier'] : config('shipping.national_courier'),
+            'weight' => !empty($data['weight']) ? $data['weight'] : 1000
           ]
         ];
+
+        // return $query;
 
         if (!empty($data['length'])) {
             $query['form_params']['length'] = $data['length'];
@@ -108,7 +133,7 @@ class National extends ShippingMethod
             $query['form_params']['height'] = $data['height'];
         }
 
-        $response = $this->client->request('POST', 'https://pro.rajaongkir.com/api/v2/internationalCost', $query);
+        $response = $this->client->request('POST', 'https://pro.rajaongkir.com/api/cost', $query);
 
         return json_decode($response->getBody(), true);
     }
