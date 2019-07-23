@@ -24,6 +24,6 @@ class Shipping
 
     protected function resolveType($type)
     {
-        return new $this->types[$type];
+        return new $this->types[strtolower($type)];
     }
 }
