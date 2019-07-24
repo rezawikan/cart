@@ -76,7 +76,7 @@ class ReturnsController extends Controller
         //
         $order->products()->sync($products);
         //
-        event(new ReturnCreate($order, $returns));
+        event(new ReturnCreate($order, $returns, $request->discount));
     }
 
     /**

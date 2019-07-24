@@ -17,11 +17,7 @@ class UpdateOrder
      */
     public function handle(ReturnCreate $event)
     {
-        $discount = collect($event->returns)->sum(function($return) {
-          return $return['discount'];
-        });
-
-        $event->order->update(['discount' => $event->order->discount - $discount]);
+        $event->order->update(['discount' => $event->order->discount - $event->discount]);
         $event->order->update([
           'base_subtotal' => $event->order->fresh()->newBaseSubTotal(),
           'subtotal' => $event->order->fresh()->newSubTotal(),

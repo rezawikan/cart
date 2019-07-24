@@ -31,10 +31,10 @@ class HandleReturnProduct
     public function convertReturn() {
       return collect($this->request->return_values)->map(function($value) {
         return [
-          'order_id' => (int) $this->request->order_id,
+          'order_id'             => (int) $this->request->order_id,
           'product_variation_id' => $value['id'],
-          'quantity' => $value['quantity'],
-          'original_price' => $value['original_price']
+          'quantity'             => $value['quantity'],
+          'original_price'       => $value['original_price']
         ];
       })->reject(function ($value) {
           return empty($value['quantity']);

@@ -17,14 +17,16 @@ class ReturnCreate
 
     public $order;
     public $returns;
+    public $discount;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Order $order, $returns)
+    public function __construct(Order $order, $returns, $discount)
     {
-        $this->order   = $order;
-        $this->returns = $returns;
+        $this->order    = $order;
+        $this->returns  = $returns;
+        $this->discount = $discount;
     }
 }

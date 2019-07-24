@@ -24,6 +24,7 @@ class ReturnsEditResource extends JsonResource
           'product_name'         => $this->variation->product->name,
           'product_type'         => $this->variation->type->name,
           'quantity'             => $this->quantity,
+          'discount'             => $this->discount,
           'status'               => $this->status,
           'info'                 => $this->info,
           'order'                => new OrderIndexResource($this->order)
