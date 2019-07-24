@@ -112,7 +112,7 @@ class ReturnsController extends Controller
     public function update(Request $request, Returns $returns)
     {
       event(new ReturnUpdate($request, $returns));
-      $returns->update($request->only(['quantity','info','status']));
+      $returns->update($request->only(['quantity','info','status','discount']));
       //
 
       // if ($request->quantity > $returns->quantity) {

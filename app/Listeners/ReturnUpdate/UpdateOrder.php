@@ -18,9 +18,10 @@ class UpdateOrder
     public function handle(ReturnUpdate $event)
     {
         $event->returns->order()->update([
-          'base_subtotal' => $event->returns->order->newBaseSubTotal(),
-          'subtotal' => $event->returns->order->newSubTotal(),
-          'total' =>   $event->returns->order->newTotal()
+          'base_subtotal' => $event->returns->order->fresh()->newBaseSubTotal(),
+          'subtotal'      => $event->returns->order->fresh()->newSubTotal(),
+          'total'         => $event->returns->order->fresh()->newTotal(),
+          'discount'      => ($event->returns->order->discount + $event->returns->discount) - $event->request->discount
         ]);
     }
 }

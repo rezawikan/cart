@@ -18,6 +18,7 @@ class Returns extends Model
       'order_id',
       'quantity',
       'original_price',
+      'discount',
       'status',
       'info'
     ];

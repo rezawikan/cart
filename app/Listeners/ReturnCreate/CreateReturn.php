@@ -19,9 +19,8 @@ class CreateReturn
      */
     public function handle(ReturnCreate $event)
     {
-        $discount = $event->order->discount / count($event->order->products);
-        $total = collect($event->returns)->sum(function($return) use ($discount){
-          return ($return['original_price'] * $return['quantity']) - ($discount * $return['quantity']);
+        $total = collect($event->returns)->sum(function($return) {
+          return ($return['original_price'] * $return['quantity']) - $return['discount'];
         });
 
         $latest = Cashflow::latest()->first();
@@ -31,7 +30,6 @@ class CreateReturn
           'info'    => 'Credit Return from order id : '.$event->order->id,
           'total'   => (empty($latest) ? 0 : $latest->total) - $total //only first time
         ]);
-
 
         $returns = collect($event->returns)->map(function($return){
           return array_merge($return, [
