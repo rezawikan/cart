@@ -111,51 +111,8 @@ class ReturnsController extends Controller
      */
     public function update(Request $request, Returns $returns)
     {
-      event(new ReturnUpdate($request, $returns));
-      $returns->update($request->only(['quantity','info','status','discount']));
-      //
-
-      // if ($request->quantity > $returns->quantity) {
-      //
-      //     return 'masuk';
-
-          // $returns->order->products()->updateExistingPivot($request->product_variation_id, [
-          //   'quantity' => $request->quantity - ($returns->quantity+1),
-          //   'status' => $request->status
-          // ]);
-
-          // $returns->update($request->only(['quantity','info','status']));
-          //
-          //
-          // $returns->order()->update([
-          //   'base_subtotal' => $returns->order->newBaseSubTotal(),
-          //   'subtotal' => $returns->order->newSubTotal(),
-          //   'total' =>   $returns->order->newTotal()
-          // ]);
-
-
-      // } elseif ($request->quantity < $returns->quantity) {
-      //    $variantOrder = $returns->order->products->where('pivot.product_variation_id', $request->product_variation_id)->first();
-      //    return ($variantOrder->pivot->quantity + $returns->quantity) - $request->quantity;
-      //    return  ;
-          // $returns->order->products()->updateExistingPivot($variantOrder->id, [
-          //   'quantity' => $returns->quantity - $request->quantity,
-          //   'status' => $request->status
-          // ]);
-
-          // $returns->update($request->only(['quantity','info','status']));
-          //
-          // $returns->order()->update([
-          //   'base_subtotal' => $returns->order->newBaseSubTotal(),
-          //   'subtotal' => $returns->order->newSubTotal(),
-          //   'total' =>   $returns->order->newTotal()
-          // ]);
-
-      // } else {
-      //   return 'takada';
-      //     // $returns->update($request->only(['quantity','info','status']));
-      // }
-
+        event(new ReturnUpdate($request, $returns));
+        $returns->update($request->only(['quantity','info','status','discount']));
     }
 
     /**

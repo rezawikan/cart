@@ -23,25 +23,23 @@ class UpdateVariationOrder
           'status'   => $event->request->status
         ]);
 
-        $before  = ($variantOrder->quantity * $variantOrder->original_price) - $variantOrder->discount;
-        $after   = ($event->returns->quantity * $event->returns->original_price) - $event->returns->discount;
-        $credit  = $before - $after;
-        $debit   = $after - $before;
-        $latest  = Cashflow::latest()->first();
+        $currOrder    = ($variantOrder->pivot->quantity * $variantOrder->pivot->original_price) - $event->returns->discount;
+        $currReturn   = ($event->returns->quantity * $event->returns->original_price) - $event->returns->discount;
+        $newRequest   = ($event->request->quantity * $event->request->original_price) - $event->request->discount;
 
-        if ($event->returns->quantity > $variantOrder->quantity) {
+        if ($newRequest > $currReturn) {
             Cashflow::create([
               'type'    => 'credit',
-              'amount'  => $credit,
+              'amount'  => $newRequest - $currReturn,
               'info'    => 'Update Return from order id : '.$event->returns->order->id,
-              'total'   => (empty($latest) ? 0 : $latest->total) - $credit //only first time
+              'total'   => (empty($latest) ? 0 : $latest->total) - ($newRequest - $currReturn) //only first time
             ]);
-        } else if ($event->returns->quantity < $variantOrder->quantity) {
+        } else if ($newRequest < $currReturn) {
             Cashflow::create([
               'type'    => 'debit',
-              'amount'  => $debit,
+              'amount'  => $currReturn - $newRequest,
               'info'    => 'Update Return from order id : '.$event->returns->order->id,
-              'total'   => (empty($latest) ? 0 : $latest->total) - $debit //only first time
+              'total'   => (empty($latest) ? 0 : $latest->total) + ($currReturn - $newRequest) //only first time
             ]);
         }
     }
