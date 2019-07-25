@@ -18,17 +18,12 @@ class UpdateOrder
      */
     public function handle(ReturnUpdate $event)
     {
-
-      $dataReturn = Returns::where('order_id', $event->returns->order->id)->get();
-       $returnDiscount = $dataReturn->sum(function($return) {
-        return $return['discount'];
-      });
-
         $event->returns->order()->update([
           'base_subtotal' => $event->returns->order->fresh()->newBaseSubTotal(),
           'subtotal'      => $event->returns->order->fresh()->newSubTotal(),
           'total'         => $event->returns->order->fresh()->newTotal(),
-          'discount'      => ($event->returns->order->discount + $returnDiscount) - $event->request->discount
+          // 'discount'      => ($event->returns->order->discount + $returnDiscount) - $event->request->discount
+          // // 8000 + 3000  - 3000
         ]);
     }
 }
