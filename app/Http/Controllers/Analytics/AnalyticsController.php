@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Analytics;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\ProductVariation;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Timeable\CountAnalyticsResource;
 use App\Http\Resources\Timeable\RevenueAnalyticsResource;
@@ -14,7 +15,7 @@ class AnalyticsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:api']);
+        $this->middleware(['auth:api'])->except('productAssets');
     }
 
     /**
@@ -75,4 +76,27 @@ class AnalyticsController extends Controller
 
         return new RevenueAnalyticsResource($numbers->merge(['status' => $orders->keys()]));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function productAssets()
+    {
+        $variations = ProductVariation::with('stocks')->get();
+        $assets = $variations->sum(function ($variant) {
+          return $variant->stockCount() * $variant->base_price;
+        });
+
+        $opAssets = $variations->sum(function ($variant) {
+          return $variant->stockCount() * $variant->price;
+        });
+
+        return [
+          'assets'    => $assets,
+          'op_asset'  => $opAssets
+        ];
+    }
+
 }

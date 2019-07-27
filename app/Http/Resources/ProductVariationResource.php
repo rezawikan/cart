@@ -36,14 +36,3 @@ class ProductVariationResource extends JsonResource
       }
 
 }
-
-
-// return [
-//   'id'    => $this->id,
-//   'name'  => $this->name,
-//   'price_varies' => $this->priceVaries(),
-//   'stock_count' => (int) $this->stockCount(),
-//   'type'  => $this->type,
-//   'product' =>  new ProductIndexResource($this->product),
-//   'weight'  => $this->weight
-// ];

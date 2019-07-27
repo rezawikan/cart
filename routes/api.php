@@ -44,6 +44,7 @@ Route::get('shipment/cities', 'Shipping\ShippingHandlerController@cities');
 Route::get('shipment/subdistricts', 'Shipping\ShippingHandlerController@subdistricts');
 Route::get('shipment/cost', 'Shipping\ShippingHandlerController@cost');
 
+Route::get('assets', 'Analytics\AnalyticsController@productAssets');
 Route::get('analytics/{period}', 'Analytics\AnalyticsController@countAnalytics');
 Route::get('revenue/{period}', 'Analytics\AnalyticsController@sumRevenueAnalytics');
 Route::get('livestock', 'Stock\LiveStockController');
